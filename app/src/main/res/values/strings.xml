@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MatrimonyApp</string>
+
+    <string name="login_register_btn">Login/Register</string>
+
+    <string name="login_error">Didn\'t login, try loggin in again to continue.</string>
+    <string name="first_time_login">First time login, please complete your profile.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_string_profile_for">Profile for</string>
+
+
+    <string name="register_input_firstname">First Name</string>
+    <string name="register_input_lastname">Last Name</string>
+    
+    <string-array name="register_spinner_profile_for">
+        <item>Self</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Niece</item>
+        <item>Daughter</item>
+        <item>Son</item>
+        <item>Relative</item>
+        <item>Friend</item>
+    </string-array>
+
+    <string name="register_gender_male">Male</string>
+    <string name="register_gender_female">Female</string>
+
+    <string name="register_date_of_birth">Date of Birth</string>
+    <string name="register_phone_no">Phone Number</string>
+    <string name="register_btn">Register</string>
+</resources>

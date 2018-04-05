@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phone_verification_enter_number">Enter you phone number below to begin verification.</string>
+    <string name="phone_verification_verify">Verify</string>
+    <string name="phone_verification_enter_pin">Enter Pin you recieved in SMS to complete verification.</string>
+</resources>

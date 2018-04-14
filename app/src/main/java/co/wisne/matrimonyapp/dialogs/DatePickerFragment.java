@@ -1,4 +1,4 @@
-package co.wisne.matrimonyapp.pickers;
+package co.wisne.matrimonyapp.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -45,4 +45,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         mActivity.setDate(day,month,year);
     }
+
+
+
 }

@@ -6,6 +6,16 @@
     <string name="login_error">Didn\'t login, try loggin in again to continue.</string>
     <string name="first_time_login">First time login, please complete your profile.</string>
 
+    <string name="radio_true">Yes</string>
+    <string name="radio_false">No</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- dialog !-->
+    <string-array name="dialog_choose_picture">
+        <item>Take a Picture</item>
+        <item>Choose from Gallery</item>
+    </string-array>
 </resources>

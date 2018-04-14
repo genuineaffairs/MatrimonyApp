@@ -19,8 +19,16 @@
 
     <string name="register_gender_male">Male</string>
     <string name="register_gender_female">Female</string>
-
+    <string name="register_select_profile_picture">Select a profile picture.</string>
     <string name="register_date_of_birth">Date of Birth</string>
+    <string name="register_upload_aadharr">Upload Aadhaar card of the user.</string>
     <string name="register_phone_no">Phone Number</string>
     <string name="register_btn">Register</string>
+
+    <string name="register_firstname_error">First name cannot be short or empty.</string>
+    <string name="register_lastname_error">Last name cannot be short or empty.</string>
+    <string name="register_dateofbirth_error">You need to be at least 18 years old.</string>
+
+    
+
 </resources>

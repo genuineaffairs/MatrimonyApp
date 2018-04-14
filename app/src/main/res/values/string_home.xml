@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="profile">Profile</string>
+    <string name="relation">Relation</string>
+    <string name="user_notifications">Notifications</string>
+    <string name="user_bookmarks">Bookmarks</string>
+    <string name="example_user_fullname">Panick Ranick</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="gender">Gender</string>
+    <string name="mobile_number">Mobile</string>
+    <string name="personal_details">Personal Details</string>
+
+    <string-array name="martial_status">
+        <item>Never Married</item>
+        <item>Divorced</item>
+        <item>Awaiting Divorce</item>
+    </string-array>
+
+    <string name="height">Height</string>
+    <string name="feet">Ft.</string>
+    <string name="inch">In.</string>
+
+    <string-array name="height_feet">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="height_inch">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string name="family_status">Family Status</string>
+    <string name="family_type">Family Type</string>
+    <string-array name="family_types">
+        <item>Nuclear Family</item>
+        <item>Joint Family</item>
+        <item>Extended Family</item>
+    </string-array>
+
+    <string name="number_of_people_in_family">Number Of People In Family</string>
+
+    <string name="specially_enabled">Specially Enabled</string>
+
+    <string name="religious_details">Religious Details</string>
+
+    <string name="religion">Religion</string>
+
+    <string-array name="religions">
+        <item>Hindu</item>
+    </string-array>
+
+    <string name="caste">Caste</string>
+
+    <string-array name="castes">
+        <item>Lingayat</item>
+    </string-array>
+
+    <string name="sub_caste">Sub-Caste</string>
+
+    <string-array name="sub_castes">
+        <item>Agasa</item>
+        <item>Madiwala</item>
+        <item>Rajaka</item>
+        <item>Parit</item>
+    </string-array>
+
+    <string name="time_of_birth">Time Of Birth</string>
+
+
+    <string name="professional_details">Professional Details</string>
+
+    <string name="highest_education">Highest Education</string>
+
+    <string-array name="highest_education_list">
+        <item>Post-Graduate</item>
+        <item>Under Graduate</item>
+        <item>Doctorate</item>
+        <item>Diploma</item>
+        <item>ITI</item>
+        <item>Xth Pass</item>
+    </string-array>
+
+    <string name="employement_status">Employement Status</string>
+
+    <string-array name="employement_status_list">
+        <item>Private Company</item>
+        <item>Government</item>
+        <item>Self Employeed</item>
+        <item>Unemployed</item>
+    </string-array>
+
+    <string name="occupation_in_details">Occupation in Details</string>
+
+    <string name="income">Income</string>
+    <string-array name="income_list">
+        <item>Less than 2 Lakh</item>
+        <item>2-4 Lakh</item>
+        <item>4-8 Lakh</item>
+        <item>8-10 Lakh</item>
+        <item>10-15 Lakh</item>
+        <item>More than 15 Lakh</item>
+    </string-array>
+
+
+</resources>

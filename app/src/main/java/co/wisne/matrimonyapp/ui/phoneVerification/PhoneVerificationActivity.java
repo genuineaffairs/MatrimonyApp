@@ -58,17 +58,17 @@ public class PhoneVerificationActivity extends AppCompatActivity {
 
     public void beginPhoneAuth(View view){
         Log.d("D", "beginPhoneAuth: begin auth");
-        successfulVerificationExit();
+   //     successfulVerificationExit();
 
-//        viewModel.showExitWindow();
-//
-//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//                "+91"+viewModel.PhoneNumber.getValue(),
-//                60,
-//                TimeUnit.SECONDS,
-//                this,
-//                mCallbacks
-//        );
+     viewModel.showExitWindow();
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                "+91"+viewModel.PhoneNumber.getValue(),
+                60,
+                TimeUnit.SECONDS,
+                this,
+                mCallbacks
+        );
     }
 
     public void completeAuth(View view){
@@ -163,7 +163,7 @@ public class PhoneVerificationActivity extends AppCompatActivity {
     public void failedVerificationExit(){
         Intent Data = new Intent();
         Data.putExtra("phone","+91"+viewModel.getPhoneNumber().getValue());
-        setResult(RESULT_OK,Data);
+        setResult(RESULT_CANCELED,Data);
         finish();
     }
 

@@ -42,6 +42,7 @@ import co.wisne.matrimonyapp.databinding.ActivityMainBinding;
 import co.wisne.matrimonyapp.interfaces.ILogin;
 import co.wisne.matrimonyapp.models.BasicProfile;
 import co.wisne.matrimonyapp.ui.register.RegisterActivity;
+import co.wisne.matrimonyapp.ui.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity implements ILogin{
 
@@ -92,9 +93,14 @@ public class MainActivity extends AppCompatActivity implements ILogin{
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
-                        menuItem.setChecked(true);
+                        //menuItem.setChecked(true);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
+
+                        if(menuItem.getItemId() == R.id.main_menu_search){
+                            Log.d("D", "onNavigationItemSelected: search");
+                            startSearchIntent();
+                        }
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
@@ -281,6 +287,16 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
             finish();
 
+    }
+
+    //start search intent
+    private void startSearchIntent(){
+
+        Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
+
+        startActivity(searchIntent);
+
+        finish();
     }
 
 

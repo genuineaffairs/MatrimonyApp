@@ -79,6 +79,14 @@ public class BasicProfile{
         return name;
     }
 
+    public String getFirstName(){
+        return name.get("first");
+    }
+
+    public String getLastName(){
+        return name.get("last");
+    }
+
     public String getBirthDate() {
         return birthDate;
     }

@@ -6,7 +6,10 @@
     tools:context=".ui.main.ProfileFragment"
     >
     <data>
-
+        <variable
+            name="viewModel"
+            type="co.wisne.matrimonyapp.ui.main.MainActivityViewModel"
+            />
     </data>
 
     <ScrollView
@@ -42,7 +45,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name" />
+                    android:hint="@string/first_name"
+                    android:text="@={viewModel.FirstName}"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -59,7 +63,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name" />
+                    android:hint="@string/last_name"
+                    android:text="@={viewModel.lastName}"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -77,14 +82,15 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date_of_birth" />
+                    android:hint="@string/date_of_birth"
+                    android:text="@={viewModel.dateOfBirth}"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/mobileNumber"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -96,7 +102,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mobile_number" />
+                    android:hint="@string/mobile_number"
+                    android:text="@={viewModel.mobileNumber}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -113,26 +120,23 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/gender" />
+                    android:hint="@string/gender"
+                    android:text="@={viewModel.gender}"/>
+
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/relation"
+            <Spinner
+                android:id="@+id/spinnerRelation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:entries="@array/register_spinner_profile_for"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gender">
-
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/relation" />
-
-            </android.support.design.widget.TextInputLayout>
+                app:layout_constraintTop_toBottomOf="@+id/textRelation" />
 
             <View
                 android:id="@+id/firstDivider"
@@ -149,23 +153,23 @@
                 android:id="@+id/textPersonalDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_thin"
                 android:text="@string/personal_details"
                 android:textColor="@android:color/holo_green_dark"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/relation"
-                app:layout_constraintTop_toBottomOf="@+id/relation" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerRelation" />
 
             <Spinner
-                android:id="@+id/spinnerMatrialStatus"
+                android:id="@+id/spinnerMaritalStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:entries="@array/martial_status"
+                android:entries="@array/marital_status"
                 android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -184,7 +188,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerMatrialStatus" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerMaritalStatus" />
 
             <View
                 android:id="@+id/divider4"
@@ -272,7 +276,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/family_status" />
+                    android:hint="@string/family_status"
+                    android:text="@={viewModel.PersonalDetails.familyStatus}"/>
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -313,7 +318,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/number_of_people_in_family" />
+                    android:hint="@string/number_of_people_in_family"
+                    android:text="@={viewModel.personalDetails.numberOfFamilyMembers}"/>
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -360,13 +366,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/radio_true" />
+                    android:text="@string/radio_true"
+                    android:onClick="@{(view)->viewModel.personalDetails.speciallyEnabledChanged(Boolean.TRUE)}"/>
 
                 <RadioButton
                     android:id="@+id/speciallyEnabledFalse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
+                    android:onClick="@{(view)->viewModel.personalDetails.speciallyEnabledChanged(Boolean.FALSE)}"
                     android:text="@string/radio_false" />
             </RadioGroup>
 
@@ -378,6 +387,7 @@
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/roboto_thin"
                 android:text="@string/religious_details"
+                android:textColor="@android:color/holo_green_dark"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/numberOfPeopleInFamily"
                 app:layout_constraintTop_toBottomOf="@+id/speciallyEnabledRadioGroup" />
@@ -403,7 +413,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
             <Spinner
-                android:id="@+id/spinner6"
+                android:id="@+id/spinnerReligion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -422,7 +432,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/caste"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner6" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerReligion" />
 
             <Spinner
                 android:id="@+id/spinnerCaste"
@@ -448,7 +458,7 @@
 
             <Spinner
                 android:id="@+id/spinnerSubCaste"
-                android:layout_width="399dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
@@ -473,7 +483,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/time_of_birth" />
+                    android:hint="@string/time_of_birth"
+                    android:text="@={viewModel.religiousDetails.timeOfBirth}"/>
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -583,6 +594,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textIncome" />
+
+            <TextView
+                android:id="@+id/textRelation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/relation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gender" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerIncome" />
 
 
         </android.support.constraint.ConstraintLayout>

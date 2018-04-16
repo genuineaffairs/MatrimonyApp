@@ -13,7 +13,7 @@
     <string name="mobile_number">Mobile</string>
     <string name="personal_details">Personal Details</string>
 
-    <string-array name="martial_status">
+    <string-array name="marital_status">
         <item>Never Married</item>
         <item>Divorced</item>
         <item>Awaiting Divorce</item>

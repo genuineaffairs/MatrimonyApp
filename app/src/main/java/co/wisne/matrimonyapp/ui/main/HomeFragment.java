@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
 
        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("User Profile");
 
-       profilePagerAdapter = new ProfilePagerAdapter(getChildFragmentManager());
+        profilePagerAdapter = new ProfilePagerAdapter(getChildFragmentManager());
 
         binding.viewPager.setAdapter(profilePagerAdapter);
 

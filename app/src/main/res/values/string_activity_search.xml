@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<string name="marital_status">Marital Status</string>
+<string name="salary">Salary</string>
 
+<string-array name="search_caste_list">
+    <item>Agasa</item>
+    <item>Madiwal</item>
+    <item>Rajaka</item>
+    <item>Parit</item>
+    <item>Doesn\'t matter</item>
+</string-array>
 
+<string-array name="search_marital_list">
+    <item>Never married</item>
+    <item>Divorced</item>
+    <item>Awaiting divorce</item>
+    <item>Doesn\'t matter</item>
+</string-array>
+
+    <string-array name="search_salary_list">
+        <item>Less than 2 Lakh</item>
+        <item>2-4 Lakh</item>
+        <item>4-8 Lakh</item>
+        <item>8-10 Lakh</item>
+        <item>10-15 Lakh</item>
+        <item>More than 15 Lakh</item>
+        <item>Doesn\'t matter</item>
+    </string-array>
 </resources>

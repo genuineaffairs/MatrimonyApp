@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
->
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="co.wisne.matrimonyapp.ui.search.SearchActivityViewModel"/>
+            type="co.wisne.matrimonyapp.ui.search.SearchActivityViewModel" />
     </data>
 
     <LinearLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="80dp"
@@ -22,7 +22,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="match_parent"
             android:background="@color/browser_actions_bg_grey">
 
 
@@ -122,10 +122,10 @@
                         android:layout_marginTop="8dp"
                         android:ems="10"
                         android:inputType="number"
+                        android:text="@={viewModel.fromAge}"
                         app:layout_constraintEnd_toStartOf="@+id/guidelineAgeSecond"
                         app:layout_constraintStart_toStartOf="@+id/guidelineAgeFirst"
-                        app:layout_constraintTop_toBottomOf="@+id/textAge"
-                        android:text="@={viewModel.fromAge}"/>
+                        app:layout_constraintTop_toBottomOf="@+id/textAge" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/guidelineAgeFirst"
@@ -249,47 +249,34 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
-                    <EditText
-                        android:id="@+id/editTextHeightFrom"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:ems="10"
-                        android:inputType="number"
-                        app:layout_constraintEnd_toStartOf="@+id/guidelineAgeSecond"
-                        app:layout_constraintStart_toStartOf="@+id/guidelineAgeFirst"
-                        app:layout_constraintTop_toBottomOf="@+id/textHeight" />
-
                     <TextView
                         android:id="@+id/textHeightTo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto_thin"
                         android:text="@string/To"
+                        android:textSize="12sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/editTextHeightFrom"
                         app:layout_constraintEnd_toStartOf="@+id/guidelineAgeThird"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/guidelineAgeSecond"
-                        app:layout_constraintTop_toTopOf="@+id/editTextHeightFrom" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinnerFromHeightFeet" />
 
-                    <EditText
-                        android:id="@+id/editTextHeightTo"
-                        android:layout_width="56dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
+                    <Spinner
+                        android:id="@+id/spinnerFromHeightInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:ems="10"
-                        android:inputType="number"
-                        app:layout_constraintBottom_toBottomOf="@+id/editTextHeightFrom"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                        app:layout_constraintStart_toStartOf="@+id/guidelineAgeThird"
-                        app:layout_constraintTop_toTopOf="@+id/editTextHeightFrom" />
+                        android:entries="@array/height_inch"
+                        app:layout_constraintBottom_toBottomOf="@+id/textFromFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/textFromInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/textFromFeet"
+                        app:layout_constraintTop_toTopOf="@+id/textFromFeet"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <View
                         android:id="@+id/dividerHeight"
@@ -297,11 +284,12 @@
                         android:layout_height="1dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editTextHeightFrom" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinnerToHeightFeet" />
 
                     <TextView
                         android:id="@+id/textSalary"
@@ -329,6 +317,109 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textSalary" />
+
+                    <Spinner
+                        android:id="@+id/spinnerToHeightFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:entries="@array/height_feet"
+                        app:layout_constraintEnd_toStartOf="@+id/textToFeet"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textHeightTo" />
+
+                    <TextView
+                        android:id="@+id/textFromInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/inch"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/textToFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/feet"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightFeet"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightFeet" />
+
+                    <TextView
+                        android:id="@+id/textFromFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/feet"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <Spinner
+                        android:id="@+id/spinnerFromHeightFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:entries="@array/height_feet"
+                        app:layout_constraintEnd_toStartOf="@+id/textFromFeet"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textHeight" />
+
+                    <Spinner
+                        android:id="@+id/spinnerToHeightInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:entries="@array/height_inch"
+                        app:layout_constraintBottom_toBottomOf="@+id/textToFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/textToHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/textToFeet"
+                        app:layout_constraintTop_toTopOf="@+id/textToFeet" />
+
+                    <TextView
+                        android:id="@+id/textToHeightInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/inch"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightInch" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v4.widget.NestedScrollView>

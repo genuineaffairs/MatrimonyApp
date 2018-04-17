@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -16,14 +18,21 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.wisne.matrimonyapp.R;
 import co.wisne.matrimonyapp.databinding.ActivitySearchBinding;
+import co.wisne.matrimonyapp.ui.search.adapter.SearchResultAdapter;
 
 public class SearchActivity extends AppCompatActivity {
 
     SearchActivityViewModel viewModel;
 
     ActivitySearchBinding binding;
+
+    RecyclerView.LayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,22 @@ public class SearchActivity extends AppCompatActivity {
 
         binding.setLifecycleOwner(this);
 
+        layoutManager = new LinearLayoutManager(this);
+
+        binding.content.searchResultsRecycler.setLayoutManager(layoutManager);
+
+        binding.content.searchResultsRecycler.setHasFixedSize(false);
+
+        ArrayList<String> names = new ArrayList<>();
+
+        names.add("Shashikant");
+        names.add("Rudrawadi");
+
+        binding.content.searchResultsRecycler.setAdapter(new SearchResultAdapter(names));
+
+
         LinearLayout linearLayout = findViewById(R.id.bottom_sheet);
+
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
 
         handleIntent(getIntent());

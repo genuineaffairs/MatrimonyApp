@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 public class SearchActivityViewModel extends ViewModel {
 
     public SearchActivityViewModel(){
-        
+
     }
 
     private MutableLiveData<String> fromAge;

@@ -53,7 +53,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_thin"
-            android:text="@string/example_user_fullname"
+            android:text="@{viewModel.firstName}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

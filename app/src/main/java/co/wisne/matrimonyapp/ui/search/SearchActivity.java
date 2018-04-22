@@ -1,11 +1,13 @@
 package co.wisne.matrimonyapp.ui.search;
 
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -32,6 +35,10 @@ public class SearchActivity extends AppCompatActivity {
     ActivitySearchBinding binding;
 
     RecyclerView.LayoutManager layoutManager;
+
+
+
+    SearchResultAdapter searchResultAdapter;
 
 
     @Override
@@ -53,19 +60,25 @@ public class SearchActivity extends AppCompatActivity {
 
         binding.content.searchResultsRecycler.setHasFixedSize(false);
 
-        ArrayList<String> names = new ArrayList<>();
+        searchResultAdapter = new SearchResultAdapter(viewModel.searchResults);
 
-        names.add("Shashikant");
-        names.add("Rudrawadi");
+        binding.content.searchResultsRecycler.setAdapter(searchResultAdapter);
 
-        binding.content.searchResultsRecycler.setAdapter(new SearchResultAdapter(names));
-
-
-        LinearLayout linearLayout = findViewById(R.id.bottom_sheet);
+        LinearLayout linearLayout = findViewById(R.id.preference);
 
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
 
         handleIntent(getIntent());
+
+        initPreference();
+
+        viewModel.getSearchReady().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                binding.content.searchResultsRecycler.getAdapter().notifyDataSetChanged();
+            }
+        });
+
     }
 
 
@@ -96,7 +109,96 @@ public class SearchActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.d("D", "handleIntent: "+query);
+            viewModel.query();
         }
+    }
+
+
+    public void initPreference(){
+
+        binding.preference.spinnerCaste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getCaste().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerMartialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getMaritalStatus().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerFromHeightFeet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getFromHeightFeet().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerFromHeightInch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getFromHeightInch().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerToHeightFeet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getToHeightFeet().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerToHeightInch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getToHeightInch().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.preference.spinnerSalary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.searchPreference.getSalary().setValue(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
 }

@@ -76,7 +76,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Spinner
-                        android:id="@+id/spinner"
+                        android:id="@+id/spinnerCaste"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -98,7 +98,7 @@
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinnerCaste" />
 
                     <TextView
                         android:id="@+id/textAge"
@@ -122,10 +122,27 @@
                         android:layout_marginTop="8dp"
                         android:ems="10"
                         android:inputType="number"
-                        android:text="@={viewModel.fromAge}"
+                        android:text="@={viewModel.searchPreference.fromAge}"
                         app:layout_constraintEnd_toStartOf="@+id/guidelineAgeSecond"
                         app:layout_constraintStart_toStartOf="@+id/guidelineAgeFirst"
-                        app:layout_constraintTop_toBottomOf="@+id/textAge" />
+                        app:layout_constraintTop_toBottomOf="@+id/textAge"
+                        />
+
+                    <EditText
+                        android:id="@+id/editTextAgeTo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="@={viewModel.searchPreference.toAge}"
+                        app:layout_constraintBottom_toBottomOf="@+id/editTextAgeFrom"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                        app:layout_constraintStart_toStartOf="@+id/guidelineAgeThird"
+                        app:layout_constraintTop_toTopOf="@+id/editTextAgeFrom"
+                        app:layout_constraintVertical_bias="1.0" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/guidelineAgeFirst"
@@ -164,21 +181,6 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.5" />
 
-                    <EditText
-                        android:id="@+id/editTextAgeTo"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:ems="10"
-                        android:inputType="number"
-                        app:layout_constraintBottom_toBottomOf="@+id/editTextAgeFrom"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline7"
-                        app:layout_constraintStart_toStartOf="@+id/guidelineAgeThird"
-                        app:layout_constraintTop_toTopOf="@+id/editTextAgeFrom"
-                        app:layout_constraintVertical_bias="1.0" />
-
                     <View
                         android:id="@+id/dividerAge"
                         android:layout_width="0dp"
@@ -205,7 +207,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/dividerAge" />
 
                     <Spinner
-                        android:id="@+id/spinner2"
+                        android:id="@+id/spinnerMartialStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -227,7 +229,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinnerMartialStatus" />
 
                     <android.support.constraint.Guideline
                         android:id="@+id/guideline7"
@@ -423,6 +425,18 @@
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v4.widget.NestedScrollView>
+
+            <Button
+                android:id="@+id/buttonApplyPreference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Apply"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 

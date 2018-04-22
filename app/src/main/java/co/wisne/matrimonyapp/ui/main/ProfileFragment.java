@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment {
 
         InitSpinners();
 
-
+        UpdateSpinners();
 
         return binding.getRoot();
     }
@@ -212,6 +212,84 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    public void UpdateSpinners(){
+
+        //spinner for personal details
+        viewModel.getPersonalDetails().getUpdateMarriageStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+
+                String key = viewModel.getPersonalDetails().getMarriageStatus().getValue();
+                String[] arr =  getResources().getStringArray(R.array.marital_status);
+                List<String> arrList = Arrays.asList(arr);
+                Log.d(TAG, "selected MaritalStatus: "+key);
+                binding.spinnerMaritalStatus.setSelection(arrList.indexOf(key));
+            }
+        });
+
+        viewModel.getPersonalDetails().getUpdateHeightFeet().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+
+                String key = viewModel.getPersonalDetails().getHeightFeet().getValue().toString();
+                String[] arr =  getResources().getStringArray(R.array.height_feet);
+                Log.d(TAG, "onChanged: height = "+key);
+                List<String> arrList = Arrays.asList(arr);
+                binding.spinnerFeets.setSelection(arrList.indexOf(key));
+            }
+        });
+
+        viewModel.getPersonalDetails().getUpdateHeightFeet().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+
+                String key = viewModel.getPersonalDetails().getHeightInch().getValue().toString();
+                String[] arr =  getResources().getStringArray(R.array.height_inch);
+                List<String> arrList = Arrays.asList(arr);
+                binding.spinnerInches.setSelection(arrList.indexOf(key));
+            }
+        });
+
+        viewModel.getPersonalDetails().getUpdateFamilyType().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+
+                String key = viewModel.getPersonalDetails().getFamilyType().getValue();
+                String[] arr =  getResources().getStringArray(R.array.family_types);
+                List<String> arrList = Arrays.asList(arr);
+                binding.spinnerFamilyType.setSelection(arrList.indexOf(key));
+            }
+        });
+
+        viewModel.getPersonalDetails().getUpdateSpeciallyEnabled().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean==null){
+                    return;
+                }
+
+                if(aBoolean == true){
+                    binding.speciallyEnabledTrue.setChecked(true);
+                }else if(aBoolean == false) {
+                    binding.speciallyEnabledFalse.setChecked(true);
+                }
+
+            }
+        });
+
+
+        //spinner for religious details
+        viewModel.getReligiousDetails().getUpdateSubCaste().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                String key = viewModel.getReligiousDetails().getSubCaste().getValue();
+                String[] arr =  getResources().getStringArray(R.array.sub_castes);
+                List<String> arrList = Arrays.asList(arr);
+                binding.spinnerSubCaste.setSelection(arrList.indexOf(key));
+            }
+        });
     }
 
 }

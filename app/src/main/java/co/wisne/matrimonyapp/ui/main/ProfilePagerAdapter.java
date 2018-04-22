@@ -20,16 +20,13 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
         if(position == 2){
             return new ProfileFragment();
         }
+        if(position == 1){
+            return new BookmarksFragment();
+        }
         if(position == 0){
             return new NotificationsFragment();
         }
-        Fragment fragment = new DemoFragment();
-        Bundle args = new Bundle();
-        // Our object is just an integer :-P
-        args.putInt(DemoFragment.ARG_OBJECT, position + 1);
-        fragment.setArguments(args);
-        return fragment;
-
+        return null;
     }
 
     @Override

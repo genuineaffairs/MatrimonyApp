@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         fragmentTransaction = fragmentManager.beginTransaction();
 
-
         mDrawerLayout = binding.mainLayout;
                 //findViewById(R.id.mainLayout);
 

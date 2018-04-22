@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import co.wisne.matrimonyapp.models.BasicProfile;
 
 import static android.content.ContentValues.TAG;
@@ -130,6 +129,23 @@ public class MainActivityViewModel extends ViewModel {
                 getRelation().postValue(userBasicProfile.getRelation());
 
                 Log.d(TAG, "onSuccess: updated Profile");
+                
+                if(documentSnapshot.contains("personalDetails")){
+                    Log.d(TAG, "onSuccess: has personal details"+documentSnapshot.get("personalDetails.height.inch"));
+
+                    //set personal details
+                    getPersonalDetails().setMarriageStatus(documentSnapshot.get("personalDetails.maritalStatus").toString());
+                    getPersonalDetails().setHeightFeet(documentSnapshot.get("personalDetails.height.feet").toString());
+                    getPersonalDetails().setHeightInch(documentSnapshot.get("personalDetails.height.inch").toString());
+                    getPersonalDetails().setFamilyType(documentSnapshot.get("personalDetails.familyType").toString());
+                    getPersonalDetails().setSpeciallyEnabled(documentSnapshot.getBoolean("personalDetails.speciallyEnabled"));
+                    getPersonalDetails().getFamilyStatus().setValue(documentSnapshot.getString("personalDetails.familyStatus"));
+                    getPersonalDetails().getNumberOfFamilyMembers().setValue(documentSnapshot.get("personalDetails.numberOfPeople") == null ? "" : documentSnapshot.get("personalDetails.numberOfPeople").toString());
+
+                    //set religious details
+                    getReligiousDetails().setSubCaste(documentSnapshot.get("religiousDetails.subCaste").toString());
+
+                }
             }
         });
     }
@@ -190,110 +206,6 @@ public class MainActivityViewModel extends ViewModel {
         );
     }
 
-
-
-
-
-    public class PersonalDetails{
-
-        MutableLiveData <String> marriageStatus;
-        MutableLiveData <Integer> heightFeet;
-        MutableLiveData <Integer> heightInch;
-        MutableLiveData <String> familyStatus;
-        MutableLiveData <String> familyType;
-        MutableLiveData <String> numberOfFamilyMembers;
-        MutableLiveData <Boolean> speciallyEnabled;
-
-        public MutableLiveData<String> getMarriageStatus() {
-            if(marriageStatus == null){
-                marriageStatus = new MutableLiveData<>();
-            }
-            return marriageStatus;
-        }
-
-        public MutableLiveData<Integer> getHeightFeet() {
-            if(heightFeet == null){
-                heightFeet = new MutableLiveData<>();
-            }
-            return heightFeet;
-        }
-
-        public MutableLiveData<Integer> getHeightInch() {
-            if(heightInch == null){
-                heightInch = new MutableLiveData<>();
-            }
-            return heightInch;
-        }
-
-        public MutableLiveData<String> getFamilyStatus() {
-            if(familyStatus == null){
-                familyStatus = new MutableLiveData<>();
-            }
-            return familyStatus;
-        }
-
-        public MutableLiveData<String> getFamilyType() {
-            if(familyType == null){
-                familyType = new MutableLiveData<>();
-            }
-            return familyType;
-        }
-
-        public MutableLiveData<String> getNumberOfFamilyMembers() {
-            if(numberOfFamilyMembers == null){
-                numberOfFamilyMembers = new MutableLiveData<>();
-            }
-            return numberOfFamilyMembers;
-        }
-
-        public MutableLiveData<Boolean> getSpeciallyEnabled() {
-            if(speciallyEnabled == null){
-                speciallyEnabled = new MutableLiveData<>();
-            }
-            return speciallyEnabled;
-        }
-
-        public void speciallyEnabledChanged(boolean result){
-            Log.d(TAG, "speciallyEnabledChanged: "+result);
-            getSpeciallyEnabled().setValue(result);
-        }
-    }
-
-    public class ReligiousDetails{
-
-        MutableLiveData<String> religion;
-        MutableLiveData<String> caste;
-        MutableLiveData<String> subCaste;
-        MutableLiveData<String> timeOfBirth;
-
-        public MutableLiveData<String> getReligion() {
-            if(religion == null){
-                religion = new MutableLiveData<>();
-            }
-            return religion;
-        }
-
-        public MutableLiveData<String> getCaste() {
-            if(caste == null){
-                caste = new MutableLiveData<>();
-            }
-            return caste;
-        }
-
-        public MutableLiveData<String> getSubCaste() {
-            if(subCaste == null){
-                subCaste = new MutableLiveData<>();
-            }
-            return subCaste;
-        }
-
-        public MutableLiveData<String> getTimeOfBirth() {
-             if (timeOfBirth == null){
-                timeOfBirth = new MutableLiveData<>();
-             }
-            return timeOfBirth;
-        }
-    }
 
     public class ProfessionalDetails{
 

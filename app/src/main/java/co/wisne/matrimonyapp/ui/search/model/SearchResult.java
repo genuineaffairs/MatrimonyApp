@@ -82,4 +82,12 @@ public class SearchResult {
     public String getHeight(){
         return this.heightFeet+"' "+this.heightInch+"''";
     }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
 }

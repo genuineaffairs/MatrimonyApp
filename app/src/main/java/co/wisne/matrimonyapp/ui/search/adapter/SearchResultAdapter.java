@@ -1,7 +1,10 @@
 package co.wisne.matrimonyapp.ui.search.adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import java.util.List;
 
 import co.wisne.matrimonyapp.R;
 import co.wisne.matrimonyapp.databinding.RecyclerSearchResultItemBinding;
+import co.wisne.matrimonyapp.ui.profile.UserProfileActivity;
 import co.wisne.matrimonyapp.ui.search.model.SearchResult;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder>{
@@ -27,6 +31,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         TextView age;
         TextView salary;
 
+        String UUID;
+
         public ViewHolder(RecyclerSearchResultItemBinding binding){
             super(binding.getRoot());
             name = binding.textResultName;
@@ -35,6 +41,21 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             maritalStatus = binding.textViewMaritalStatusValue;
             age = binding.textViewAgeValue;
             salary = binding.textViewSalaryValue;
+
+
+            binding.getRoot().setOnClickListener(view -> {
+                Intent userProfileIntent = new Intent(binding.getRoot().getContext(), UserProfileActivity.class);
+                userProfileIntent.putExtra("profileUUID",getUUID());
+                binding.getRoot().getContext().startActivity(userProfileIntent);
+            });
+        }
+
+        public void setUUID(String UUID) {
+            this.UUID = UUID;
+        }
+
+        public String getUUID() {
+            return UUID;
         }
     }
 
@@ -63,7 +84,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.height.setText(results.get(position).getHeight());
         holder.maritalStatus.setText(results.get(position).getMaritalStatus());
         holder.salary.setText(results.get(position).getSalary());
-        
+        holder.setUUID(results.get(position).getUUID());
     }
 
     @Override

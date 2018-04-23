@@ -58,14 +58,16 @@ public class SearchActivityViewModel extends ViewModel {
     }
 
     public void loadUser(){
+
         getShowProgressBar().setValue(true);
+
         db.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 userSex = documentSnapshot.getString("sex");
 
-                Log.d(TAG, "onSuccess: "+userSex);
+                Log.d(TAG, "onSuccess: userData loaded successfully");
 
                 getShowProgressBar().setValue(false);
             }
@@ -92,15 +94,12 @@ public class SearchActivityViewModel extends ViewModel {
                             d.getId(),
                             d.getString("name.first"),
                             d.getString("name.last"),
-                            d.getString("height.feet"),
-                            d.getString("height.inch"),
-                            d.getString("salary"),
-                            d.getString("maritalStatus"),
+                            d.get("personalDetails.height.feet").toString(),
+                            d.get("personalDetails.height.inch").toString(),
+                            d.getString("professionalDetails.income"),
+                            d.getString("personalDetails.maritalStatus"),
                             d.getString("age")
                     ));
-
-                    Log.d(TAG, "onSuccess: "+d.getId());
-
 
                 }
                 getSearchReady().setValue(true);

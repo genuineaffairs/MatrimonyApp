@@ -85,6 +85,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.maritalStatus.setText(results.get(position).getMaritalStatus());
         holder.salary.setText(results.get(position).getSalary());
         holder.setUUID(results.get(position).getUUID());
+        holder.age.setText(results.get(position).getAge());
     }
 
     @Override

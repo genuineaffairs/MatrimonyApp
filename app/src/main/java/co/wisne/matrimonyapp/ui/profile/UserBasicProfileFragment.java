@@ -29,11 +29,14 @@ public class UserBasicProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         viewModel = ViewModelProviders.of(getActivity()).get(UserProfileActivityViewModel.class);
 
         binding = FragmentUserBasicProfileBinding.inflate(inflater,container,false);
 
         binding.setViewModel(viewModel);
+
+        binding.setLifecycleOwner(this);
 
         return binding.getRoot();
     }

@@ -15,6 +15,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import co.wisne.matrimonyapp.models.BasicProfile;
 import co.wisne.matrimonyapp.ui.search.model.SearchResult;
@@ -70,6 +71,7 @@ public class SearchActivityViewModel extends ViewModel {
                 Log.d(TAG, "onSuccess: userData loaded successfully");
 
                 getShowProgressBar().setValue(false);
+
             }
         });
     }
@@ -90,6 +92,14 @@ public class SearchActivityViewModel extends ViewModel {
 
                 for (DocumentSnapshot d: queryDocumentSnapshots) {
 
+                    Date birthDate = d.getDate("birthDate");
+
+                    Date currentDate = new Date();
+
+                    long diffTime = currentDate.getTime() - birthDate.getTime();
+
+                    long diffYears = (diffTime / (24 * 60 * 60 * 1000))/365;
+
                     searchResults.add(new SearchResult(
                             d.getId(),
                             d.getString("name.first"),
@@ -98,10 +108,11 @@ public class SearchActivityViewModel extends ViewModel {
                             d.get("personalDetails.height.inch").toString(),
                             d.getString("professionalDetails.income"),
                             d.getString("personalDetails.maritalStatus"),
-                            d.getString("age")
+                            String.valueOf(diffYears)
                     ));
 
                 }
+
                 getSearchReady().setValue(true);
                 showProgressBar.setValue(false);
             }

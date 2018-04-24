@@ -293,9 +293,10 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
 
+        searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         startActivity(searchIntent);
 
-        finish();
     }
 
 

@@ -10,6 +10,11 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
     String[] tabTitle = {"Notifications","Bookmarks","Profile"};
 
+    ProfileFragment profileFragment;
+    BookmarksFragment bookmarksFragment;
+    NotificationsFragment notificationsFragment;
+
+
     public ProfilePagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
 
@@ -18,13 +23,22 @@ public class ProfilePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 2){
-            return new ProfileFragment();
+            if(profileFragment == null){
+                profileFragment = new ProfileFragment();
+            }
+            return profileFragment;
         }
         if(position == 1){
-            return new BookmarksFragment();
+            if(bookmarksFragment == null){
+                bookmarksFragment = new BookmarksFragment();
+            }
+            return bookmarksFragment;
         }
         if(position == 0){
-            return new NotificationsFragment();
+            if(notificationsFragment == null){
+                notificationsFragment = new NotificationsFragment();
+            }
+            return notificationsFragment;
         }
         return null;
     }

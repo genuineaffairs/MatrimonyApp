@@ -12,7 +12,7 @@
             />
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_light"
@@ -103,6 +103,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/mobile_number"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusableInTouchMode="false"
                     android:text="@={viewModel.mobileNumber}" />
             </android.support.design.widget.TextInputLayout>
 
@@ -121,6 +125,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/gender"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusableInTouchMode="false"
                     android:text="@={viewModel.gender}"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -134,6 +142,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:entries="@array/register_spinner_profile_for"
+
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.setRelation(adapterView.getItemAtPosition(pos).toString())}"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textRelation" />
@@ -171,6 +182,9 @@
                 android:layout_marginTop="16dp"
                 android:entries="@array/marital_status"
                 android:spinnerMode="dialog"
+
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.personalDetails.setMarriageStatus(adapterView.getItemAtPosition(pos).toString())}"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -215,7 +229,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textfeet"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineFiftyPercent"
                 app:layout_constraintTop_toTopOf="@+id/textfeet"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.personalDetails.setHeightFeet(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <Spinner
                 android:id="@+id/spinnerInches"
@@ -231,7 +247,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textfeet"
                 app:layout_constraintStart_toStartOf="@+id/guidelineFiftyPercent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.personalDetails.setHeightInch(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <TextView
                 android:id="@+id/textfeet"
@@ -301,7 +318,9 @@
                 android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textFamilyType" />
+                app:layout_constraintTop_toBottomOf="@+id/textFamilyType"
+
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.personalDetails.setFamilyType(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/numberOfPeopleInFamily"
@@ -422,7 +441,10 @@
                 android:entries="@array/religions"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textReligion" />
+                app:layout_constraintTop_toBottomOf="@+id/textReligion"
+
+                android:onItemSelected="@{(adapterView,view,pos,id)-> viewModel.religiousDetails.setReligion(adapterView.getItemAtPosition(pos).toString())}"
+                />
 
             <TextView
                 android:id="@+id/textCaste"
@@ -444,7 +466,8 @@
                 android:entries="@array/castes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textCaste" />
+                app:layout_constraintTop_toBottomOf="@+id/textCaste"
+                android:onItemSelected="@{(adapterView,view,pos,id)-> viewModel.religiousDetails.setCaste(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <TextView
                 android:id="@+id/textSubCaste"
@@ -454,7 +477,8 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/sub_caste"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerCaste" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCaste"
+                />
 
             <Spinner
                 android:id="@+id/spinnerSubCaste"
@@ -466,7 +490,8 @@
                 android:entries="@array/sub_castes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textSubCaste" />
+                app:layout_constraintTop_toBottomOf="@+id/textSubCaste"
+                android:onItemSelected="@{(adapterView,view,pos,id)-> viewModel.religiousDetails.setSubCaste(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/timeOfBirth"
@@ -530,7 +555,9 @@
                 android:entries="@array/highest_education_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHighestEducation" />
+                app:layout_constraintTop_toBottomOf="@+id/textHighestEducation"
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.professionalDetails.setHighestEducation(adapterView.getItemAtPosition(pos).toString())}"
+                />
 
             <TextView
                 android:id="@+id/textEmploymentStatus"
@@ -540,7 +567,8 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/employement_status"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerHighestEducation" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerHighestEducation"
+               />
 
             <Spinner
                 android:id="@+id/spinnerEmployeementStatus"
@@ -552,7 +580,8 @@
                 android:entries="@array/employement_status_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textEmploymentStatus" />
+                app:layout_constraintTop_toBottomOf="@+id/textEmploymentStatus"
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.professionalDetails.setEmployementStatus(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/occupationInDetails"
@@ -593,7 +622,8 @@
                 android:entries="@array/income_list"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textIncome" />
+                app:layout_constraintTop_toBottomOf="@+id/textIncome"
+                android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.professionalDetails.setIncome(adapterView.getItemAtPosition(pos).toString())}"/>
 
             <TextView
                 android:id="@+id/textRelation"
@@ -621,6 +651,6 @@
         </android.support.constraint.ConstraintLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </layout>

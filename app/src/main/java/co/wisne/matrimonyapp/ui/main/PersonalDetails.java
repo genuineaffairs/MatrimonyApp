@@ -21,18 +21,6 @@ public class PersonalDetails{
 
     MutableLiveData <Boolean> speciallyEnabled;
 
-
-    //update signal
-    MutableLiveData <Boolean> updateMarriageStatus;
-
-    MutableLiveData <Boolean> updateHeightFeet;
-
-    MutableLiveData <Boolean> updateHeightInch;
-
-    MutableLiveData <Boolean> updateFamilyType;
-
-    MutableLiveData <Boolean> updateSpeciallyEnabled;
-
     public MutableLiveData<String> getMarriageStatus() {
         if(marriageStatus == null){
             marriageStatus = new MutableLiveData<>();
@@ -87,72 +75,38 @@ public class PersonalDetails{
         getSpeciallyEnabled().setValue(result);
     }
 
-    public MutableLiveData<Boolean> getUpdateMarriageStatus() {
-        if(updateMarriageStatus == null){
-            updateMarriageStatus = new MutableLiveData<>();
-        }
-        return updateMarriageStatus;
-    }
 
-    public MutableLiveData<Boolean> getUpdateHeightFeet() {
-        if(updateHeightFeet == null){
-            updateHeightFeet = new MutableLiveData<>();
-        }
-        return updateHeightFeet;
-    }
-
-    public MutableLiveData<Boolean> getUpdateHeightInch() {
-        if(updateHeightInch == null){
-            updateHeightInch = new MutableLiveData<>();
-        }
-        return updateHeightInch;
-    }
-
-    public MutableLiveData<Boolean> getUpdateFamilyType() {
-        if(updateFamilyType == null){
-            updateFamilyType = new MutableLiveData<>();
-        }
-        return updateFamilyType;
-    }
-
-    public MutableLiveData<Boolean> getUpdateSpeciallyEnabled() {
-        if(updateSpeciallyEnabled == null){
-            updateSpeciallyEnabled = new MutableLiveData<>();
-        }
-        return updateSpeciallyEnabled;
-    }
 
     public void setMarriageStatus(String value) {
         if(value==null)
             return;
+        Log.d(TAG, "setMarriageStatus: "+value);
         getMarriageStatus().setValue(value);
-        getUpdateMarriageStatus().setValue(true);
     }
 
     public void setHeightFeet(String value) {
         if(value==null)
             return;
+        Log.d(TAG, "setHeightFeet: "+value);
         getHeightFeet().setValue(Integer.parseInt(value));
-        getUpdateHeightFeet().setValue(true);
     }
 
     public void setHeightInch(String value) {
         if(value==null)
             return;
+        Log.d(TAG, "setHeightInch: "+value);
         getHeightInch().setValue(Integer.parseInt(value));
-        getUpdateHeightInch().setValue(true);
     }
 
     public void setFamilyType(String value) {
         if(value==null)
             return;
+        Log.d(TAG, "setFamilyType: "+value);
         getFamilyType().setValue(value);
-        getUpdateFamilyType().setValue(true);
     }
 
     public void setSpeciallyEnabled(Boolean speciallyEnabled) {
 
         getSpeciallyEnabled().setValue(speciallyEnabled);
-        getUpdateSpeciallyEnabled().setValue(speciallyEnabled);
     }
 }

@@ -41,6 +41,8 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater,container,false);
 
+        binding.setLifecycleOwner(this);
+
         binding.setViewModel(viewModel);
 
         profilePagerAdapter = new ProfilePagerAdapter(getChildFragmentManager());

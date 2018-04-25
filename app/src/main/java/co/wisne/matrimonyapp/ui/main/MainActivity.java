@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
             loadWelcomeScreen();
 
+
             ShowLoginUI();
 
 
@@ -240,10 +241,14 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
                         //if this is users first time login
                         if(!task.getResult().exists()) {
+
                             startRegisterIntent();
+
                         }
                         else{
+
                            viewModel.loadUserData();
+
                         }
                     }
                     else {

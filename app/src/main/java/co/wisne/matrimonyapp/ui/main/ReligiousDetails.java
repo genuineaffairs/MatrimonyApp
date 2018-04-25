@@ -1,6 +1,9 @@
 package co.wisne.matrimonyapp.ui.main;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
+
+import static android.content.ContentValues.TAG;
 
 public class ReligiousDetails{
 
@@ -9,7 +12,6 @@ public class ReligiousDetails{
     MutableLiveData<String> subCaste;
     MutableLiveData<String> timeOfBirth;
 
-    MutableLiveData<Boolean> updateSubCaste;
 
     public MutableLiveData<String> getReligion() {
         if(religion == null){
@@ -39,15 +41,27 @@ public class ReligiousDetails{
         return timeOfBirth;
     }
 
-    public MutableLiveData<Boolean> getUpdateSubCaste() {
-        if(updateSubCaste == null){
-            updateSubCaste = new MutableLiveData<>();
+    public void setReligion(String religion) {
+        if(religion == null){
+            return;
         }
-        return updateSubCaste;
+        Log.d(TAG, "setReligion: "+religion);
+        getReligion().setValue(religion);
+    }
+
+    public void setCaste(String caste) {
+        if(caste==null){
+            return;
+        }
+        getCaste().setValue(caste);
     }
 
     public void setSubCaste(String value) {
+        if(value == null){
+            return;
+        }
+        Log.d("D", "setSubCaste: "+value);
         getSubCaste().setValue(value);
-        getUpdateSubCaste().setValue(true);
+
     }
 }

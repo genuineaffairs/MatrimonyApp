@@ -1,5 +1,6 @@
 package co.wisne.matrimonyapp.ui.main;
 
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
@@ -29,6 +30,8 @@ public class MainActivityViewModel extends ViewModel {
 
     ProfessionalDetails professionalDetails;
 
+    MediatorLiveData<String> fullName;
+
     MutableLiveData<String> firstName;
     MutableLiveData<String> lastName;
     MutableLiveData<String> dateOfBirth;
@@ -41,6 +44,21 @@ public class MainActivityViewModel extends ViewModel {
         personalDetails = new PersonalDetails();
         religiousDetails = new ReligiousDetails();
         professionalDetails = new ProfessionalDetails();
+
+        getFullName().addSource(getFirstName(), (s)->{
+            getFullName().postValue(s + " "+ getLastName().getValue());
+        });
+
+        getFullName().addSource(getLastName(), (s)->{
+            getFullName().postValue(getFirstName().getValue() + " "+ s );
+        });
+    }
+
+    public MediatorLiveData<String> getFullName() {
+        if(firstName == null){
+            fullName = new MediatorLiveData<>();
+        }
+        return fullName;
     }
 
     public ProfessionalDetails getProfessionalDetails() {
@@ -68,6 +86,7 @@ public class MainActivityViewModel extends ViewModel {
         }
         return lastName;
     }
+
 
     public MutableLiveData<String> getRelation() {
         if(relation == null){
@@ -104,6 +123,11 @@ public class MainActivityViewModel extends ViewModel {
         return dateOfBirth;
     }
 
+    public void setRelation(String relation) {
+        Log.d(TAG, "setRelation: "+relation);
+        this.relation.setValue(relation);
+    }
+
     public void loadUserData(){
 
         db.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -113,8 +137,6 @@ public class MainActivityViewModel extends ViewModel {
                 Log.d(TAG, "onSuccess: Updating Profile");
 
                 userBasicProfile = documentSnapshot.toObject(BasicProfile.class);
-
-                UpdateProfile.postValue(true);
 
                 getFirstName().postValue(userBasicProfile.getFirstName());
 
@@ -131,29 +153,91 @@ public class MainActivityViewModel extends ViewModel {
                 Log.d(TAG, "onSuccess: updated Profile");
                 
                 if(documentSnapshot.contains("personalDetails")){
-                    Log.d(TAG, "onSuccess: has personal details"+documentSnapshot.get("personalDetails.height.inch"));
 
                     //set personal details
-                    getPersonalDetails().setMarriageStatus(documentSnapshot.get("personalDetails.maritalStatus").toString());
-                    getPersonalDetails().setHeightFeet(documentSnapshot.get("personalDetails.height.feet").toString());
-                    getPersonalDetails().setHeightInch(documentSnapshot.get("personalDetails.height.inch").toString());
-                    getPersonalDetails().setFamilyType(documentSnapshot.get("personalDetails.familyType").toString());
-                    getPersonalDetails().setSpeciallyEnabled(documentSnapshot.getBoolean("personalDetails.speciallyEnabled"));
-                    getPersonalDetails().getFamilyStatus().setValue(documentSnapshot.getString("personalDetails.familyStatus"));
-                    getPersonalDetails().getNumberOfFamilyMembers().setValue(documentSnapshot.get("personalDetails.numberOfPeople") == null ? "" : documentSnapshot.get("personalDetails.numberOfPeople").toString());
+                    if(userBasicProfile.getPersonalDetails()!=null){
 
-                    //set religious details
-                    getReligiousDetails().setSubCaste(documentSnapshot.get("religiousDetails.subCaste").toString());
+                        BasicProfile.PersonalDetails personalDetails = userBasicProfile.getPersonalDetails();
+
+                        if(personalDetails.getMaritalStatus()!=null){
+                            getPersonalDetails().setMarriageStatus(personalDetails.getMaritalStatus());
+                        }
+
+                        if(personalDetails.getHeight()!=null){
+
+                            if(personalDetails.getHeight().get("feet") != null){
+                                getPersonalDetails().setHeightFeet(personalDetails.getHeight().get("feet").toString());
+                            }
+
+                            if(personalDetails.getHeight().get("inch") != null){
+                                getPersonalDetails().setHeightInch(personalDetails.getHeight().get("inch").toString());
+                            }
+
+                        }
+
+
+                        if(personalDetails.getFamilyType()!=null){
+                            getPersonalDetails().setFamilyType(personalDetails.getFamilyType());
+                        }
+
+                        if(personalDetails.getSpeciallyEnabled()!=null){
+                            getPersonalDetails().setSpeciallyEnabled(personalDetails.getSpeciallyEnabled());
+                        }
+
+                        if(personalDetails.getFamilyStatus()!=null){
+                            getPersonalDetails().getFamilyStatus().setValue(personalDetails.getFamilyStatus());
+                        }
+
+                        if(personalDetails.getNumberOfPeople()!=null){
+                            getPersonalDetails().getNumberOfFamilyMembers().setValue(personalDetails.getNumberOfPeople());
+                        }
+                    }
 
                 }
+
+                if(userBasicProfile.getReligiousDetails()!=null){
+                    //set religious details
+                    if(userBasicProfile.getReligiousDetails().getSubCaste()!= null){
+                        getReligiousDetails().setSubCaste(userBasicProfile.getReligiousDetails().getSubCaste());
+                    }
+                }
+
+                if(userBasicProfile.getProfessionalDetails()!=null){
+                    BasicProfile.ProfessionalDetails professionalDetails = userBasicProfile.getProfessionalDetails();
+
+                    if(professionalDetails.getHighestEducation()!=null){
+                        getProfessionalDetails().setHighestEducation(professionalDetails.getHighestEducation());
+                    }
+
+                    if(professionalDetails.getEmployementStatus()!=null){
+                        getProfessionalDetails().setEmployementStatus(professionalDetails.getEmployementStatus());
+                    }
+
+                    if(professionalDetails.getIncome()!=null){
+                        getProfessionalDetails().setIncome(professionalDetails.getIncome());
+                    }
+
+                    if (professionalDetails.getOccupationalDetails()!=null){
+                        getProfessionalDetails().getOccupationDetails().setValue(professionalDetails.getOccupationalDetails());
+
+                    }
+
+                }
+
+                UpdateProfile.postValue(true);
             }
         });
+    }
+    
+    public void setSpinner(String s){
+        Log.d(TAG, "setSpinner: changed spinner "+s);
     }
 
 
     public void saveProfile() {
+
         Log.d(TAG, "saveProfile: firstname: " + getFirstName().getValue());
-        Log.d(TAG, "saveProfile: lastnaem " + getLastName().getValue());
+        Log.d(TAG, "saveProfile: lastname  " + getLastName().getValue());
         Log.d(TAG, "saveProfile: date of birth " + getDateOfBirth().getValue());
         Log.d(TAG, "saveProfile: mobile " + getMobileNumber().getValue());
         Log.d(TAG, "saveProfile: gender " + getGender().getValue());
@@ -163,7 +247,8 @@ public class MainActivityViewModel extends ViewModel {
         Log.d(TAG, "saveProfile: marital status " + getPersonalDetails().getMarriageStatus().getValue());
         Log.d(TAG, "saveProfile: height feet " + getPersonalDetails().getHeightFeet().getValue());
         Log.d(TAG, "saveProfile: height inch " + getPersonalDetails().getHeightInch().getValue());
-        Log.d(TAG, "saveProfile: family status " + getPersonalDetails().getFamilyType().getValue());
+        Log.d(TAG, "saveProfile: family status " + getPersonalDetails().getFamilyStatus().getValue());
+        Log.d(TAG, "saveProfile: family type " + getPersonalDetails().getFamilyType().getValue());
         Log.d(TAG, "saveProfile: number of people " + getPersonalDetails().getNumberOfFamilyMembers().getValue());
         Log.d(TAG, "saveProfile: specially enabled " + getPersonalDetails().getSpeciallyEnabled().getValue());
 
@@ -180,7 +265,9 @@ public class MainActivityViewModel extends ViewModel {
 
         db.collection("users").document(user.getUid()).update(
                 "name.first", getFirstName().getValue(),
-                "name.last", getLastName().getValue()
+                "name.last", getLastName().getValue(),
+                "relation",getRelation().getValue()
+
         );
 
         db.collection("users").document(user.getUid()).update(
@@ -207,40 +294,7 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
-    public class ProfessionalDetails{
 
-        MutableLiveData<String> highestEducation;
-        MutableLiveData<String> employementStatus;
-        MutableLiveData<String> occupationDetails;
-        MutableLiveData<String> income;
-
-        public MutableLiveData<String> getHighestEducation() {
-            if(highestEducation == null){
-                highestEducation = new MutableLiveData<>();
-            }
-            return highestEducation;
-        }
-
-        public MutableLiveData<String> getEmployementStatus() {
-            if(employementStatus == null){
-                employementStatus = new MutableLiveData<>();
-            }
-            return employementStatus;
-        }
-
-        public MutableLiveData<String> getOccupationDetails() {
-            if(occupationDetails == null){
-                occupationDetails = new MutableLiveData<>();
-            }
-            return occupationDetails;
-        }
-
-        public MutableLiveData<String> getIncome() {
-            if(income == null){
-                income = new MutableLiveData<>();
-            }
-            return income;
-        }
     }
 
-}
+

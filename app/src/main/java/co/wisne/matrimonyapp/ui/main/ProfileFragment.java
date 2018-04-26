@@ -40,8 +40,6 @@ public class ProfileFragment extends Fragment {
 
     FragmentProfileBinding binding;
 
-    boolean InitiatedAll = false;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -70,14 +68,16 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            UpdateSpinners();
-
-
-
-        return binding.getRoot();
+            return binding.getRoot();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        UpdateSpinners();
+
+    }
 
     public void UpdateSpinners(){
         new SetSpinnersTask().execute();

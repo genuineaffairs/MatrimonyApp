@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
+
 import co.wisne.matrimonyapp.models.BasicProfile;
 
 import static android.content.ContentValues.TAG;
@@ -42,6 +44,10 @@ public class MainActivityViewModel extends ViewModel {
     MutableLiveData<String> mobileNumber;
     MutableLiveData<String> relation;
 
+    MutableLiveData<String> snackBarEvent;
+
+    MutableLiveData<Boolean> profileCompleted;
+
     StorageReference profilePictureRef;
 
     public  MainActivityViewModel(){
@@ -62,11 +68,29 @@ public class MainActivityViewModel extends ViewModel {
         });
     }
 
+
+    //for snackbar
+
+
+    public MutableLiveData<String> getSnackBarEvent() {
+        if(snackBarEvent == null){
+            snackBarEvent = new MutableLiveData<>();
+        }
+        return snackBarEvent;
+    }
+
     public MediatorLiveData<String> getFullName() {
         if(firstName == null){
             fullName = new MediatorLiveData<>();
         }
         return fullName;
+    }
+
+    public MutableLiveData<Boolean> getProfileCompleted() {
+        if(profileCompleted == null){
+            profileCompleted = new MutableLiveData<>();
+        }
+        return profileCompleted;
     }
 
     public ProfessionalDetails getProfessionalDetails() {
@@ -147,17 +171,21 @@ public class MainActivityViewModel extends ViewModel {
 
                 userBasicProfile = documentSnapshot.toObject(BasicProfile.class);
 
-                getFirstName().postValue(userBasicProfile.getFirstName());
+                getFirstName().postValue(userBasicProfile.getName().get("first"));
 
-                getLastName().postValue(userBasicProfile.getLastName());
+                getLastName().postValue(userBasicProfile.getName().get("last"));
 
-                getDateOfBirth().postValue(userBasicProfile.getBirthDate());
+
+
+                getDateOfBirth().postValue(new SimpleDateFormat("dd/MM/yyy").format(userBasicProfile.getBirthDate()));
 
                 getMobileNumber().postValue(userBasicProfile.getPhoneNumber());
 
                 getGender().postValue(userBasicProfile.getSex());
 
                 getRelation().postValue(userBasicProfile.getRelation());
+
+                getProfileCompleted().postValue(userBasicProfile.getProfileCompleted());
 
                 
                 if(documentSnapshot.contains("personalDetails")){
@@ -240,6 +268,8 @@ public class MainActivityViewModel extends ViewModel {
 
     public void saveProfile() {
 
+        //save changes to user profile
+
         db.collection("users").document(user.getUid()).update(
                 "name.first", getFirstName().getValue(),
                 "name.last", getLastName().getValue(),
@@ -247,7 +277,9 @@ public class MainActivityViewModel extends ViewModel {
 
         );
 
-        db.collection("users").document(user.getUid()).update(
+        db.collection("users")
+                .document(user.getUid())
+                .update(
                 "personalDetails.maritalStatus",getPersonalDetails().getMarriageStatus().getValue(),
                 "personalDetails.height.feet",getPersonalDetails().getHeightFeet().getValue(),
                 "personalDetails.height.inch",getPersonalDetails().getHeightInch().getValue(),
@@ -264,10 +296,19 @@ public class MainActivityViewModel extends ViewModel {
                 "professionalDetails.highestEducation", getProfessionalDetails().getHighestEducation().getValue(),
                 "professionalDetails.employementStatus", getProfessionalDetails().getEmployementStatus().getValue(),
                 "professionalDetails.occupationalDetails", getProfessionalDetails().getOccupationDetails().getValue(),
-                "professionalDetails.income", getProfessionalDetails().getIncome().getValue()
+                "professionalDetails.income", getProfessionalDetails().getIncome().getValue(),
+
+                 //profile completed
+                 "profileCompleted",true
 
 
-        );
+        ).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                getProfileCompleted().postValue(true);
+                getSnackBarEvent().postValue("Profile changes saved.");
+            }
+        });
     }
 
 

@@ -60,16 +60,12 @@ public class UserProfileActivityViewModel extends ViewModel {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Log.d("D", "onSuccess: loaded user profile data");
-
                 String firstName = documentSnapshot.getString("name.first");
 
                 String lastName = documentSnapshot.getString("name.last");
 
 
                 getBasicProfile().getFullName().postValue(firstName + " " + lastName);
-
-                Log.d("A", "onSuccess: "+firstName);
 
                 //display date of birth
                 Date date = documentSnapshot.getDate("birthDate");
@@ -84,16 +80,20 @@ public class UserProfileActivityViewModel extends ViewModel {
 
                 getBasicProfile().getDateOfBirth().postValue(format.format(date)+" (Age "+diffYears+" )");
 
-                Log.d("D", "onSuccess: set date "+format.format(date));
+
                 //set Height
 
-                int heightFeet = (int)documentSnapshot.getDouble("personalDetails.height.feet").doubleValue();
+                if(documentSnapshot.getDouble("personalDetails.height.feet")!=null){
 
-                int heightInch = (int)documentSnapshot.getDouble("personalDetails.height.inch").doubleValue();
+                    Integer heightFeet = (int)documentSnapshot.getDouble("personalDetails.height.feet").doubleValue();
 
-                getBasicProfile().getHeight().postValue(heightFeet + "' "+heightInch + "\" ");
+                    Integer heightInch = (int)documentSnapshot.getDouble("personalDetails.height.inch").doubleValue();
 
-                Log.d("D", "onSuccess: loaded user height");
+                    getBasicProfile().getHeight().postValue(heightFeet + "' "+heightInch + "\" ");
+
+                }
+
+
 
                 //set marital status
 
@@ -223,7 +223,7 @@ public class UserProfileActivityViewModel extends ViewModel {
         loadProfileUri(userUID);
     }
 
-    public void loadProfileUri(String UUID){
+     private void loadProfileUri(String UUID){
 
         FirebaseStorage.getInstance()
                 .getReference()
@@ -235,9 +235,6 @@ public class UserProfileActivityViewModel extends ViewModel {
                         getUserProfileUri().postValue(uri);
                     }
                 });
-
-
-
     }
 
 

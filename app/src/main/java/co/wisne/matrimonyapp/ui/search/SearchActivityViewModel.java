@@ -105,11 +105,12 @@ public class SearchActivityViewModel extends ViewModel {
                             d.getId(),
                             d.getString("name.first"),
                             d.getString("name.last"),
-                            d.get("personalDetails.height.feet").toString(),
-                            d.get("personalDetails.height.inch").toString(),
+                            d.get("personalDetails.height.feet") == null ? "" :  d.get("personalDetails.height.feet").toString(),
+                            d.get("personalDetails.height.inch") == null ? "" :  d.get("personalDetails.height.inch").toString(),
                             d.getString("professionalDetails.income"),
                             d.getString("personalDetails.maritalStatus"),
-                            String.valueOf(diffYears)
+                            String.valueOf(diffYears),
+                            d.getString("religiousDetails.subCaste")
                     ));
 
                 }
@@ -217,37 +218,30 @@ public class SearchActivityViewModel extends ViewModel {
         }
 
         public void setCaste(String caste) {
-            Log.d(TAG, "setCaste: "+caste);
             getCaste().setValue(caste);
         }
 
         public void setMaritalStatus(String maritalStatus) {
-            Log.d(TAG, "setMaritalStatus: "+maritalStatus);
             getMaritalStatus().setValue(maritalStatus);
         }
 
         public void setSalary(String salary) {
-            Log.d(TAG, "setSalary: "+salary);
            getSalary().setValue(salary);
         }
 
         public void setFromHeightFeet(String fromHeightFeet) {
-            Log.d(TAG, "setFromHeightFeet: "+fromHeightFeet);
             getFromHeightFeet().setValue(fromHeightFeet);
         }
 
         public void setFromHeightInch(String fromHeightInch) {
-            Log.d(TAG, "setFromHeightInch: "+fromHeightInch);
             getFromHeightFeet().setValue(fromHeightInch);
         }
 
         public void setToHeightFeet(String toHeightFeet) {
-            Log.d(TAG, "setToHeightFeet: "+toHeightFeet);
             getToHeightFeet().setValue(toHeightFeet);
         }
 
         public void setToHeightInch(String toHeightInch) {
-            Log.d(TAG, "setToHeightInch: "+toHeightInch);
             getToHeightInch().setValue(toHeightInch);
         }
     }

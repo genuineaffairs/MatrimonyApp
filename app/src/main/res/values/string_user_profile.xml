@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="bookmark_user_dialog_prompt_message">Do you want to bookmark this user?</string>
+    <string name="prompt_yes">Yes</string>
+    <string name="prompt_no">No</string>
+</resources>

@@ -21,6 +21,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import co.wisne.matrimonyapp.models.BasicProfile;
@@ -396,9 +399,14 @@ public class RegisterViewModel extends ViewModel{
 
         BasicProfile userProfile = new BasicProfile();
         userProfile.setRelation(relation);
-        userProfile.setFirstName(firstName);
-        userProfile.setLastName(lastName);
-        userProfile.setBirthDate(birthDate);
+        userProfile.getName().put("first",firstName);
+        userProfile.getName().put("last",lastName);
+        try {
+            Date dateFormat = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
+            userProfile.setBirthDate(dateFormat);
+        }catch (ParseException e){
+            Log.e(TAG, "insertIntoDatabase: Invalid Date form ",e);
+        }
         userProfile.setPhoneNumber(phoneNumber);
         userProfile.setSex(sex);
         userProfile.setProfilePictureName("profile.jpg");

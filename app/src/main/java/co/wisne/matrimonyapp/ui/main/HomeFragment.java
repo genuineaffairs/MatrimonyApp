@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
 
                     profilePictureUri = uri;
 
-                    if(binding!=null){
+                    if(getActivity()!=null){
 
                         Glide.with(HomeFragment.this /* context */)
                                 .load(uri)
@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment {
             });
 
         }else {
+            if(getActivity()!=null)
             Glide.with(HomeFragment.this /* context */)
                     .load(profilePictureUri)
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))

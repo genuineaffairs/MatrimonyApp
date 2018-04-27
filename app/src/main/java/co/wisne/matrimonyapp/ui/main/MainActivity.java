@@ -129,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements ILogin{
             }
         });
 
+        viewModel.getSnackBarEvent().observe(this,
+                (string)->{
+                    Snackbar.make(binding.mainCoordinatorLayout, string, Snackbar.LENGTH_SHORT).show();
+                });
+
 
         //if user is not signed in
         if(auth.getCurrentUser() == null){

@@ -9,10 +9,11 @@ public class SearchResult {
     String salary;
     String maritalStatus;
     String age;
+    String subCaste;
 
     public SearchResult(){}
 
-    public SearchResult(String UUID,String firstName, String lastName, String heightFeet, String heighInch, String salary, String maritalStatus, String age) {
+    public SearchResult(String UUID,String firstName, String lastName, String heightFeet, String heighInch, String salary, String maritalStatus, String age, String subCaste) {
         this.UUID = UUID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,6 +22,7 @@ public class SearchResult {
         this.salary = salary;
         this.maritalStatus = maritalStatus;
         this.age = age;
+        this.subCaste = subCaste;
     }
 
     public String getFirstName() {
@@ -89,5 +91,13 @@ public class SearchResult {
 
     public String getUUID() {
         return UUID;
+    }
+
+    public String getSubCaste() {
+        return subCaste;
+    }
+
+    public void setSubCaste(String subCaste) {
+        this.subCaste = subCaste;
     }
 }

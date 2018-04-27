@@ -26,9 +26,11 @@
             android:layout_gravity="center"
             android:visibility="@{viewModel.showProgressBar ? View.VISIBLE : View.GONE}"/>
 
-        <include layout="@layout/content_search_activity"
+        <include
             android:id="@+id/content"
-            />
+            layout="@layout/content_search_activity"
+            app:layout_anchor="@+id/preference"
+            app:layout_anchorGravity="top|center" />
 
         <include
             android:id="@+id/preference"

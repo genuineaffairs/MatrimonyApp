@@ -1,5 +1,6 @@
 package co.wisne.matrimonyapp.models;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ public class BasicProfile{
 
     String relation;
     Map<String, String> name = new HashMap<>();
-    String birthDate;
+    Date birthDate;
     String phoneNumber;
     String sex;
     String profilePictureName;
@@ -17,12 +18,14 @@ public class BasicProfile{
     PersonalDetails personalDetails = new PersonalDetails();
     ProfessionalDetails professionalDetails = new ProfessionalDetails();
 
+    private Boolean profileCompleted;
+
 
     public BasicProfile(){
 
     }
 
-    public  BasicProfile(String Relation, String FirstName, String LastName, String BirthDate, String PhoneNumber, String Sex){
+    public  BasicProfile(String Relation, String FirstName, String LastName, Date BirthDate, String PhoneNumber, String Sex){
         relation = Relation;
         name.put("first",FirstName);
         name.put("last",LastName);
@@ -31,7 +34,7 @@ public class BasicProfile{
         sex = Sex;
     }
 
-    public  BasicProfile(String Relation, String FirstName, String LastName, String BirthDate, String PhoneNumber, String Sex, String ProfilePictureName, String IDProofPictureName){
+    public  BasicProfile(String Relation, String FirstName, String LastName, Date BirthDate, String PhoneNumber, String Sex, String ProfilePictureName, String IDProofPictureName){
         relation = Relation;
         name.put("first",FirstName);
         name.put("last",LastName);
@@ -46,15 +49,9 @@ public class BasicProfile{
         this.relation = relation;
     }
 
-    public void setFirstName(String firstName) {
-        this.name.put("first", firstName);
-    }
 
-    public void setLastName(String lastName) {
-        this.name.put("last", lastName);
-    }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -83,15 +80,8 @@ public class BasicProfile{
         return name;
     }
 
-    public String getFirstName(){
-        return name.get("first");
-    }
 
-    public String getLastName(){
-        return name.get("last");
-    }
-
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -140,6 +130,17 @@ public class BasicProfile{
         this.professionalDetails = professionalDetails;
     }
 
+    public Boolean getProfileCompleted() {
+        return profileCompleted;
+    }
+
+    public void setProfileCompleted(Boolean profileCompleted) {
+        this.profileCompleted = profileCompleted;
+    }
+
+
+    //personal details
+
     public static class PersonalDetails{
         private String familyStatus;
         private String familyType;
@@ -147,6 +148,7 @@ public class BasicProfile{
         private String numberOfPeople;
         private Boolean speciallyEnabled;
         private Map<String, Long> height;
+
 
         public String getFamilyStatus() {
             return familyStatus;
@@ -195,6 +197,8 @@ public class BasicProfile{
         public void setHeight(Map<String, Long> height) {
             this.height = height;
         }
+
+
     }
 
     public static class ReligiousDetails{

@@ -15,8 +15,9 @@ import com.bumptech.glide.Glide;
 import co.wisne.matrimonyapp.R;
 import co.wisne.matrimonyapp.databinding.ActivityUserProfileBinding;
 import co.wisne.matrimonyapp.ui.profile.adapter.UserProfileTabAdapter;
+import co.wisne.matrimonyapp.ui.profile.dialogs.BookmarkPromptDialogFragment;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity implements BookmarkPromptDialogFragment.BookmarkUserPrompt {
 
     ActivityUserProfileBinding binding;
 
@@ -63,5 +64,16 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+
+        binding.buttonBookmark.setOnClickListener((view)->{
+            BookmarkPromptDialogFragment bookmarkPromptDialogFragment = new BookmarkPromptDialogFragment();
+            bookmarkPromptDialogFragment.show(getSupportFragmentManager(),"bookmark");
+        });
+
+    }
+
+    @Override
+    public void bookmarkCurrentUser() {
+        Log.d("D", "bookmarkCurrentUser: bookmarking "+viewModel.getBasicProfile().getFullName().getValue());
     }
 }

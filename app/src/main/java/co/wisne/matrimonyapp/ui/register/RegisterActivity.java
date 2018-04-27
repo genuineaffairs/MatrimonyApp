@@ -5,8 +5,12 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +18,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -230,11 +238,16 @@ public class RegisterActivity extends AppCompatActivity implements ISetDate,Adap
 
                 InputStream inputStream = getContentResolver().openInputStream(fullPhotoUri);
 
-                Drawable pic = Drawable.createFromStream(inputStream, fullPhotoUri.toString() );
+                BitmapFactory.Options options = new BitmapFactory.Options();
 
-                setPictureImageButton(pic);
+                options.inMutable = true;
 
-                setPictureURI(fullPhotoUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream,null,options);
+
+                setThumbnail(bitmap);
+
+                setPictureBitmap(bitmap);
+
 
             } catch (FileNotFoundException e) {
 
@@ -256,15 +269,19 @@ public class RegisterActivity extends AppCompatActivity implements ISetDate,Adap
 
                     InputStream inputStream = getContentResolver().openInputStream(photoPath);
 
-                    Drawable pic = Drawable.createFromStream(inputStream, selectPicture.getCurrentPhotoPath() );
+                    BitmapFactory.Options options = new BitmapFactory.Options();
 
-                    setPictureImageButton(pic);
+                    options.inMutable = true;
 
-                    setPictureURI(photoPath);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream,null,options);
+
+                    setThumbnail(bitmap);
+
+                    setPictureBitmap(bitmap);
 
                 } catch (FileNotFoundException e) {
 
-                    Log.e("E", "onActivityResult: "+e);
+                    Log.e("E", "onActivityResult: " + e);
 
                 }
             }
@@ -301,29 +318,42 @@ public class RegisterActivity extends AppCompatActivity implements ISetDate,Adap
         selectPicture.show(getSupportFragmentManager(),"selectIDProof");
     }
 
-    private void setPictureImageButton(Drawable drawable){
+    public void setThumbnail(Bitmap bitmap){
 
         if(CHOOSEN_PICTURE == PROFILE_PICTURE){
-            binding.imageButtonProfilePicture.setImageDrawable(drawable);
-            Log.d("D", "setPictureImageButton: for profile picture");
-        }else if(CHOOSEN_PICTURE == ID_PROOF){
-            Log.d("D", "setPictureImageButton: for ID proof");
-            binding.imageButtonIDProof.setImageDrawable(drawable);
+            Log.d("D", "setThumbnail: for profile");
+
+            // Get the dimensions of the View
+            int targetW = binding.imageButtonProfilePicture.getWidth();
+            int targetH =  binding.imageButtonProfilePicture.getHeight();
+
+
+            Bitmap s = Bitmap.createScaledBitmap(bitmap,targetW ,targetH,false);
+            binding.imageButtonProfilePicture.setImageBitmap(s);
+
+        }else if (CHOOSEN_PICTURE == ID_PROOF){
+            Log.d("D", "setThumbnail: for Id proof");
+
+            // Get the dimensions of the View
+            int targetW = binding.imageButtonIDProof.getWidth();
+            int targetH =  binding.imageButtonIDProof.getHeight();
+
+
+            Bitmap s = Bitmap.createScaledBitmap(bitmap,targetW ,targetH,false);
+
+            binding.imageButtonIDProof.setImageBitmap(s);
         }
     }
 
-    private void setPictureURI(Uri uri){
-
+    private void setPictureBitmap(Bitmap bitmap){
         if(CHOOSEN_PICTURE == PROFILE_PICTURE){
-            viewModel.setProfilePictureURI(uri);
-            Log.d("D", "setPictureURI: for profile "+uri);
+            viewModel.profilePictureBitmap = bitmap;
+            Log.d("D", "setPictureURI: for profile ");
         }else if(CHOOSEN_PICTURE == ID_PROOF){
-            viewModel.setIDProofURI(uri);
-            Log.d("D", "setPictureURI: for id "+uri);
+            viewModel.idProofBitmap = bitmap;
+            Log.d("D", "setPictureURI: for id ");
         }
-
     }
-
 
     //item selection for spinner.
 

@@ -1,6 +1,7 @@
 package co.wisne.matrimonyapp.ui.search.adapter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +28,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     private ArrayList<SearchResult> results = new ArrayList<>();
 
+    ViewGroup viewGroup;
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView name;
@@ -30,6 +38,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         TextView maritalStatus;
         TextView age;
         TextView salary;
+        ImageView profilePicture;
 
         String UUID;
 
@@ -41,6 +50,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             maritalStatus = binding.textViewMaritalStatusValue;
             age = binding.textViewAgeValue;
             salary = binding.textViewSalaryValue;
+            profilePicture = binding.imageViewProfilePicture;
 
 
             binding.getRoot().setOnClickListener(view -> {
@@ -71,6 +81,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
+        viewGroup = parent;
 
         RecyclerSearchResultItemBinding binding = RecyclerSearchResultItemBinding.inflate(inflater,parent,false);
 
@@ -86,6 +97,22 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.salary.setText(results.get(position).getSalary());
         holder.setUUID(results.get(position).getUUID());
         holder.age.setText(results.get(position).getAge());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseStorage.getInstance().getReference().child(
+                        results.get(position).getUUID()+"/images/profile.jpg"
+                ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(viewGroup.getContext())
+                                .load(uri)
+                                .into(holder.profilePicture);
+                    }
+                });
+            }
+        }).run();
     }
 
     @Override

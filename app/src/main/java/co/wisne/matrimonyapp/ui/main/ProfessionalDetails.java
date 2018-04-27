@@ -42,17 +42,17 @@ public class ProfessionalDetails {
     }
 
     public void setHighestEducation(String value) {
-        Log.d(TAG, "setHighestEducation: "+value);
+
         getHighestEducation().setValue(value);
     }
 
     public void setEmployementStatus(String employementStatus) {
-        Log.d(TAG, "setEmployementStatus: "+employementStatus);
+
         getEmployementStatus().setValue(employementStatus);
     }
 
     public void setIncome(String income) {
-        Log.d(TAG, "setIncome: "+income);
+
         getIncome().setValue(income);
     }
 }

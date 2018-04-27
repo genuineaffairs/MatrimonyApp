@@ -43,8 +43,10 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+
+       // setContentView(R.layout.activity_search);
 
         viewModel = ViewModelProviders.of(this).get(SearchActivityViewModel.class);
 
@@ -123,98 +125,25 @@ public class SearchActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+
             String query = intent.getStringExtra(SearchManager.QUERY);
+
             Log.d("D", "handleIntent: "+query);
+
             viewModel.query();
+
         }
     }
 
 
     public void initPreference(){
 
-        binding.preference.spinnerCaste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getCaste().setValue(adapterView.getItemAtPosition(i).toString());
-            }
+        viewModel.getSearchPreference().getFromAge().setValue(String.valueOf(18));
+        viewModel.getSearchPreference().getToAge().setValue(String.valueOf(35));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+        binding.preference.spinnerFromHeightFeet.setSelection(2);
+        binding.preference.spinnerToHeightFeet.setSelection(4);
 
-            }
-        });
-
-        binding.preference.spinnerMartialStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getMaritalStatus().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        binding.preference.spinnerFromHeightFeet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getFromHeightFeet().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        binding.preference.spinnerFromHeightInch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getFromHeightInch().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        binding.preference.spinnerToHeightFeet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getToHeightFeet().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        binding.preference.spinnerToHeightInch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getToHeightInch().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        binding.preference.spinnerSalary.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                viewModel.searchPreference.getSalary().setValue(adapterView.getItemAtPosition(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
 }

@@ -10,13 +10,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import co.wisne.matrimonyapp.models.BasicProfile;
 
 import static android.content.ContentValues.TAG;
 
 public class MainActivityViewModel extends ViewModel {
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user ;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -39,7 +42,12 @@ public class MainActivityViewModel extends ViewModel {
     MutableLiveData<String> mobileNumber;
     MutableLiveData<String> relation;
 
+    StorageReference profilePictureRef;
+
     public  MainActivityViewModel(){
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         userBasicProfile = new BasicProfile();
         personalDetails = new PersonalDetails();
         religiousDetails = new ReligiousDetails();
@@ -124,7 +132,6 @@ public class MainActivityViewModel extends ViewModel {
     }
 
     public void setRelation(String relation) {
-        Log.d(TAG, "setRelation: "+relation);
         this.relation.setValue(relation);
     }
 
@@ -134,7 +141,9 @@ public class MainActivityViewModel extends ViewModel {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                Log.d(TAG, "onSuccess: Updating Profile");
+                //set profile picture;
+
+                profilePictureRef = FirebaseStorage.getInstance().getReference().child(user.getUid()+"/images/profile.jpg");
 
                 userBasicProfile = documentSnapshot.toObject(BasicProfile.class);
 
@@ -150,7 +159,6 @@ public class MainActivityViewModel extends ViewModel {
 
                 getRelation().postValue(userBasicProfile.getRelation());
 
-                Log.d(TAG, "onSuccess: updated Profile");
                 
                 if(documentSnapshot.contains("personalDetails")){
 
@@ -229,39 +237,8 @@ public class MainActivityViewModel extends ViewModel {
         });
     }
     
-    public void setSpinner(String s){
-        Log.d(TAG, "setSpinner: changed spinner "+s);
-    }
-
 
     public void saveProfile() {
-
-        Log.d(TAG, "saveProfile: firstname: " + getFirstName().getValue());
-        Log.d(TAG, "saveProfile: lastname  " + getLastName().getValue());
-        Log.d(TAG, "saveProfile: date of birth " + getDateOfBirth().getValue());
-        Log.d(TAG, "saveProfile: mobile " + getMobileNumber().getValue());
-        Log.d(TAG, "saveProfile: gender " + getGender().getValue());
-        Log.d(TAG, "saveProfile: relation " + getRelation().getValue());
-
-        //personal Details
-        Log.d(TAG, "saveProfile: marital status " + getPersonalDetails().getMarriageStatus().getValue());
-        Log.d(TAG, "saveProfile: height feet " + getPersonalDetails().getHeightFeet().getValue());
-        Log.d(TAG, "saveProfile: height inch " + getPersonalDetails().getHeightInch().getValue());
-        Log.d(TAG, "saveProfile: family status " + getPersonalDetails().getFamilyStatus().getValue());
-        Log.d(TAG, "saveProfile: family type " + getPersonalDetails().getFamilyType().getValue());
-        Log.d(TAG, "saveProfile: number of people " + getPersonalDetails().getNumberOfFamilyMembers().getValue());
-        Log.d(TAG, "saveProfile: specially enabled " + getPersonalDetails().getSpeciallyEnabled().getValue());
-
-        Log.d(TAG, "saveProfile: religion " + getReligiousDetails().getReligion().getValue());
-        Log.d(TAG, "saveProfile: caste " + getReligiousDetails().getCaste().getValue());
-        Log.d(TAG, "saveProfile: sub caste" + getReligiousDetails().getSubCaste().getValue());
-        Log.d(TAG, "saveProfile: time Of birth " + getReligiousDetails().getTimeOfBirth().getValue());
-
-
-        Log.d(TAG, "saveProfile: Highest education " + getProfessionalDetails().getHighestEducation().getValue());
-        Log.d(TAG, "saveProfile: Employement status" + getProfessionalDetails().getEmployementStatus().getValue());
-        Log.d(TAG, "saveProfile: occupation details " + getProfessionalDetails().getOccupationDetails().getValue());
-        Log.d(TAG, "saveProfile: Income " + getProfessionalDetails().getIncome().getValue());
 
         db.collection("users").document(user.getUid()).update(
                 "name.first", getFirstName().getValue(),

@@ -2,6 +2,7 @@ package co.wisne.matrimonyapp.ui.search;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,7 +48,7 @@ public class SearchActivityViewModel extends ViewModel {
 
         searchResults = new ArrayList<>();
 
-        loadUser();
+        //loadUser();
 
     }
 
@@ -60,7 +61,7 @@ public class SearchActivityViewModel extends ViewModel {
 
     public void loadUser(){
 
-        getShowProgressBar().setValue(true);
+        getShowProgressBar().postValue(true);
 
         db.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -70,7 +71,7 @@ public class SearchActivityViewModel extends ViewModel {
 
                 Log.d(TAG, "onSuccess: userData loaded successfully");
 
-                getShowProgressBar().setValue(false);
+                getShowProgressBar().postValue(false);
 
             }
         });
@@ -84,7 +85,7 @@ public class SearchActivityViewModel extends ViewModel {
 
         searchResults.clear();
 
-        showProgressBar.setValue(true);
+        getShowProgressBar().postValue(true);
 
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -113,8 +114,8 @@ public class SearchActivityViewModel extends ViewModel {
 
                 }
 
-                getSearchReady().setValue(true);
-                showProgressBar.setValue(false);
+                getSearchReady().postValue(true);
+                getShowProgressBar().postValue(false);
             }
         });
 
@@ -213,6 +214,41 @@ public class SearchActivityViewModel extends ViewModel {
                 salary = new MutableLiveData<>();
             }
             return salary;
+        }
+
+        public void setCaste(String caste) {
+            Log.d(TAG, "setCaste: "+caste);
+            getCaste().setValue(caste);
+        }
+
+        public void setMaritalStatus(String maritalStatus) {
+            Log.d(TAG, "setMaritalStatus: "+maritalStatus);
+            getMaritalStatus().setValue(maritalStatus);
+        }
+
+        public void setSalary(String salary) {
+            Log.d(TAG, "setSalary: "+salary);
+           getSalary().setValue(salary);
+        }
+
+        public void setFromHeightFeet(String fromHeightFeet) {
+            Log.d(TAG, "setFromHeightFeet: "+fromHeightFeet);
+            getFromHeightFeet().setValue(fromHeightFeet);
+        }
+
+        public void setFromHeightInch(String fromHeightInch) {
+            Log.d(TAG, "setFromHeightInch: "+fromHeightInch);
+            getFromHeightFeet().setValue(fromHeightInch);
+        }
+
+        public void setToHeightFeet(String toHeightFeet) {
+            Log.d(TAG, "setToHeightFeet: "+toHeightFeet);
+            getToHeightFeet().setValue(toHeightFeet);
+        }
+
+        public void setToHeightInch(String toHeightInch) {
+            Log.d(TAG, "setToHeightInch: "+toHeightInch);
+            getToHeightInch().setValue(toHeightInch);
         }
     }
 }

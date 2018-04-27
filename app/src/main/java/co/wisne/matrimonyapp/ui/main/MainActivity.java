@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -50,15 +51,13 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
     private static final int RC_SIGN_IN = 123;
 
-    FragmentManager fragmentManager;
-
-    FragmentTransaction fragmentTransaction;
-
     DrawerLayout mDrawerLayout;
 
     MainActivityViewModel viewModel;
 
     ActivityMainBinding binding;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -77,9 +76,7 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         binding.setLifecycleOwner(this);
 
-        fragmentManager = getSupportFragmentManager();
 
-        fragmentTransaction = fragmentManager.beginTransaction();
 
         mDrawerLayout = binding.mainLayout;
                 //findViewById(R.id.mainLayout);
@@ -119,10 +116,19 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-
-
         //get firebase auth
         auth = FirebaseAuth.getInstance();
+
+
+        ///observer for changes
+
+        viewModel.getUpdateProfile().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean b) {
+                loadHomeFragment();
+            }
+        });
+
 
         //if user is not signed in
         if(auth.getCurrentUser() == null){
@@ -135,19 +141,13 @@ public class MainActivity extends AppCompatActivity implements ILogin{
             ShowLoginUI();
 
 
-        }else {
+        } else {
 
             UserProfileCheck();
+
         }
 
-        ///observer for changes
 
-        viewModel.getUpdateProfile().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean b) {
-                loadHomeFragment();
-            }
-        });
 
 
     }
@@ -155,9 +155,10 @@ public class MainActivity extends AppCompatActivity implements ILogin{
     //load Welcome screen
     public void loadWelcomeScreen(){
 
-        fragmentTransaction.add(R.id.mainFrame,new Welcome(),"Welcome");
-
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.mainFrame,new Welcome(),"Welcome")
+                .commit();
 
     }
 
@@ -166,11 +167,10 @@ public class MainActivity extends AppCompatActivity implements ILogin{
     @Override
     public void RemoveLoginUI() {
 
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.remove(fragmentManager.findFragmentByTag("Welcome"));
-
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(getSupportFragmentManager().findFragmentByTag("Welcome"))
+                .commit();
 
     }
 
@@ -215,21 +215,29 @@ public class MainActivity extends AppCompatActivity implements ILogin{
     }
 
     private void loadHomeFragment(){
+
         Log.d("D", "loadHomeFragment: HomeFragment initiated");
 
-        fragmentTransaction = fragmentManager.beginTransaction();
+        if(getSupportFragmentManager().findFragmentByTag("home") == null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.mainFrame,new HomeFragment(),"home").commit();
+        }else {
+            Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("home");
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .show(homeFragment)
+                    .commit();
+        }
 
-        fragmentTransaction.add(R.id.mainFrame,new HomeFragment(),"home");
-
-        fragmentTransaction.commit();
 
     }
 
     public void UserProfileCheck(){
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
 
@@ -252,7 +260,9 @@ public class MainActivity extends AppCompatActivity implements ILogin{
                         }
                     }
                     else {
+
                         displaySnackBar("Failed to load user data.");
+
                     }
 
 
@@ -296,11 +306,16 @@ public class MainActivity extends AppCompatActivity implements ILogin{
     //start search intent
     private void startSearchIntent(){
 
+
         Intent searchIntent = new Intent(getApplicationContext(), SearchActivity.class);
 
         searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         startActivity(searchIntent);
+
+
+
+
 
     }
 

@@ -35,8 +35,8 @@
                 android:id="@+id/firstName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,15 +46,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
-                    android:text="@={viewModel.FirstName}"/>
+                    android:text="@={viewModel.FirstName}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/lastName"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,15 +64,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
-                    android:text="@={viewModel.lastName}"/>
+                    android:text="@={viewModel.lastName}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/dateOfBirth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/date_of_birth"
-                    android:text="@={viewModel.dateOfBirth}"/>
+                    android:text="@={viewModel.dateOfBirth}" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -91,8 +91,8 @@
                 android:id="@+id/mobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -102,11 +102,11 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mobile_number"
-                    android:focusable="false"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:focusable="false"
                     android:focusableInTouchMode="false"
+                    android:hint="@string/mobile_number"
                     android:text="@={viewModel.mobileNumber}" />
             </android.support.design.widget.TextInputLayout>
 
@@ -114,8 +114,8 @@
                 android:id="@+id/gender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,12 +124,12 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/gender"
-                    android:focusable="false"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:text="@={viewModel.gender}"/>
+                    android:hint="@string/gender"
+                    android:text="@={viewModel.gender}" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -164,9 +164,9 @@
                 android:id="@+id/textPersonalDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_thin"
+                android:fontFamily="@font/roboto"
                 android:text="@string/personal_details"
                 android:textColor="@android:color/holo_green_dark"
                 android:textStyle="bold"
@@ -282,8 +282,8 @@
                 android:id="@+id/textFamilyStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -294,17 +294,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/family_status"
-                    android:text="@={viewModel.PersonalDetails.familyStatus}"/>
+                    android:text="@={viewModel.PersonalDetails.familyStatus}" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/textFamilyType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/family_type"
-                app:layout_constraintStart_toStartOf="@+id/textFamilyStatus"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textFamilyStatus" />
 
             <Spinner
@@ -326,8 +326,8 @@
                 android:id="@+id/numberOfPeopleInFamily"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -338,7 +338,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/number_of_people_in_family"
-                    android:text="@={viewModel.personalDetails.numberOfFamilyMembers}"/>
+                    android:text="@={viewModel.personalDetails.numberOfFamilyMembers}" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -404,11 +404,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/roboto_thin"
+                android:fontFamily="@font/roboto"
                 android:text="@string/religious_details"
                 android:textColor="@android:color/holo_green_dark"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/numberOfPeopleInFamily"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/speciallyEnabledRadioGroup" />
 
             <View
@@ -497,8 +497,8 @@
                 android:id="@+id/timeOfBirth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -509,7 +509,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/time_of_birth"
-                    android:text="@={viewModel.religiousDetails.timeOfBirth}"/>
+                    android:text="@={viewModel.religiousDetails.timeOfBirth}" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -518,7 +518,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="31dp"
-                android:fontFamily="@font/roboto_thin"
+                android:fontFamily="@font/roboto"
                 android:text="@string/professional_details"
                 android:textColor="@android:color/holo_green_dark"
                 android:textStyle="bold"
@@ -587,8 +587,8 @@
                 android:id="@+id/occupationInDetails"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -631,6 +631,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/relation"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/gender" />
@@ -639,10 +640,12 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/save"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerIncome" />

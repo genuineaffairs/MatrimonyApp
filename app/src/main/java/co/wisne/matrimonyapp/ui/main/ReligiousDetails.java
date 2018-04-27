@@ -45,7 +45,7 @@ public class ReligiousDetails{
         if(religion == null){
             return;
         }
-        Log.d(TAG, "setReligion: "+religion);
+
         getReligion().setValue(religion);
     }
 
@@ -60,7 +60,7 @@ public class ReligiousDetails{
         if(value == null){
             return;
         }
-        Log.d("D", "setSubCaste: "+value);
+
         getSubCaste().setValue(value);
 
     }

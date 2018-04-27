@@ -50,25 +50,27 @@
                     app:layout_constraintGuide_percent="0.7" />
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardViewProfilePicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="5dp"
                     app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-                    android:innerRadius="0dp"
-                    android:shape="ring"
-                    android:thicknessRatio="1.9">
+                    app:layout_constraintTop_toTopOf="@+id/guidelineTop">
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/imageViewProfilePicture"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/com_facebook_profile_picture_blank_square" />
                 </android.support.v7.widget.CardView>
 

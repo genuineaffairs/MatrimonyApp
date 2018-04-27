@@ -86,7 +86,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textSubCaste" />
+                        app:layout_constraintTop_toBottomOf="@+id/textSubCaste"
+                        android:onItemSelected="@{(adapterView,view,pos,id)-> viewModel.searchPreference.setCaste(adapterView.getItemAtPosition(pos).toString())}"/>
 
                     <View
                         android:id="@+id/divider"
@@ -216,7 +217,8 @@
                         android:entries="@array/search_marital_list"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textMaritalStatus" />
+                        app:layout_constraintTop_toBottomOf="@+id/textMaritalStatus"
+                        android:onItemSelected="@{(adapterView,view,pos,id)-> viewModel.searchPreference.setMaritalStatus(adapterView.getItemAtPosition(pos).toString())}"/>
 
                     <View
                         android:id="@+id/divider6"
@@ -268,6 +270,36 @@
                         app:layout_constraintTop_toBottomOf="@+id/spinnerFromHeightFeet" />
 
                     <Spinner
+                        android:id="@+id/spinnerFromHeightFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:entries="@array/height_feet"
+                        app:layout_constraintEnd_toStartOf="@+id/textFromFeet"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textHeight"
+                        android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.searchPreference.setFromHeightFeet(adapterView.getItemAtPosition(pos).toString())}"/>
+
+                    <TextView
+                        android:id="@+id/textFromFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/feet"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightFeet"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <Spinner
                         android:id="@+id/spinnerFromHeightInch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -278,6 +310,25 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/textFromFeet"
                         app:layout_constraintTop_toTopOf="@+id/textFromFeet"
+                        app:layout_constraintVertical_bias="0.0"
+                        android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.searchPreference.setFromHeightInch(adapterView.getItemAtPosition(pos).toString())}"/>
+
+                    <TextView
+                        android:id="@+id/textFromInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/inch"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightInch"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightInch"
                         app:layout_constraintVertical_bias="0.0" />
 
                     <View
@@ -292,6 +343,64 @@
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/spinnerToHeightFeet" />
+
+                    <Spinner
+                        android:id="@+id/spinnerToHeightFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:entries="@array/height_feet"
+                        app:layout_constraintEnd_toStartOf="@+id/textToFeet"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textHeightTo"
+                        android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.searchPreference.setToHeightFeet(adapterView.getItemAtPosition(pos).toString())}"/>
+
+                    <TextView
+                        android:id="@+id/textToFeet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/feet"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightFeet"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightFeet" />
+
+                    <Spinner
+                        android:id="@+id/spinnerToHeightInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:entries="@array/height_inch"
+                        app:layout_constraintBottom_toBottomOf="@+id/textToFeet"
+                        app:layout_constraintEnd_toStartOf="@+id/textToHeightInch"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/textToFeet"
+                        app:layout_constraintTop_toTopOf="@+id/textToFeet"
+                        android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.searchPreference.setToHeightInch(adapterView.getItemAtPosition(pos).toString())}"/>
+
+                    <TextView
+                        android:id="@+id/textToHeightInch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:text="@string/inch"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightInch"
+                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightInch" />
 
                     <TextView
                         android:id="@+id/textSalary"
@@ -315,113 +424,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:entries="@array/search_salary_list"
+                        android:onItemSelected="@{(adapterView,view,pos,id)->viewModel.searchPreference.setSalary(adapterView.getItemAtPosition(pos).toString())}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textSalary" />
-
-                    <Spinner
-                        android:id="@+id/spinnerToHeightFeet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:entries="@array/height_feet"
-                        app:layout_constraintEnd_toStartOf="@+id/textToFeet"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textHeightTo" />
-
-                    <TextView
-                        android:id="@+id/textFromInch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/roboto_thin"
-                        android:text="@string/inch"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightInch"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightInch"
-                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightInch"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                    <TextView
-                        android:id="@+id/textToFeet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto_thin"
-                        android:text="@string/feet"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightFeet"
-                        app:layout_constraintEnd_toStartOf="@+id/spinnerToHeightInch"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightFeet"
-                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightFeet" />
-
-                    <TextView
-                        android:id="@+id/textFromFeet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:fontFamily="@font/roboto_thin"
-                        android:text="@string/feet"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinnerFromHeightFeet"
-                        app:layout_constraintEnd_toStartOf="@+id/spinnerFromHeightInch"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/spinnerFromHeightFeet"
-                        app:layout_constraintTop_toTopOf="@+id/spinnerFromHeightFeet"
-                        app:layout_constraintVertical_bias="1.0" />
-
-                    <Spinner
-                        android:id="@+id/spinnerFromHeightFeet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:entries="@array/height_feet"
-                        app:layout_constraintEnd_toStartOf="@+id/textFromFeet"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textHeight" />
-
-                    <Spinner
-                        android:id="@+id/spinnerToHeightInch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:entries="@array/height_inch"
-                        app:layout_constraintBottom_toBottomOf="@+id/textToFeet"
-                        app:layout_constraintEnd_toStartOf="@+id/textToHeightInch"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textToFeet"
-                        app:layout_constraintTop_toTopOf="@+id/textToFeet" />
-
-                    <TextView
-                        android:id="@+id/textToHeightInch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:fontFamily="@font/roboto_thin"
-                        android:text="@string/inch"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/spinnerToHeightInch"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/spinnerToHeightInch"
-                        app:layout_constraintTop_toTopOf="@+id/spinnerToHeightInch" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.v4.widget.NestedScrollView>

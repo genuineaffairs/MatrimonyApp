@@ -9,9 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import co.wisne.matrimonyapp.R;
+import co.wisne.matrimonyapp.databinding.FragmentWelcomeBinding;
 import co.wisne.matrimonyapp.interfaces.ILogin;
 
 /**
@@ -19,25 +18,23 @@ import co.wisne.matrimonyapp.interfaces.ILogin;
  */
 public class Welcome extends Fragment {
 
-    @BindView(R.id.welcome_login_btn)
-    Button LoginButton;
 
     public Welcome() {
         // Required empty public constructor
     }
 
+    FragmentWelcomeBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_welcome, container, false);
 
-        ButterKnife.bind(this,view);
+        binding = FragmentWelcomeBinding.inflate(inflater,container,false);
 
-        LoginButton.setOnClickListener(View -> initLogin());
+        binding.welcomeLoginBtn.setOnClickListener(View -> initLogin());
 
-        return view;
+        return binding.getRoot();
     }
 
     public void initLogin(){

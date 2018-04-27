@@ -2,12 +2,15 @@ package co.wisne.matrimonyapp.ui.profile;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.net.Uri;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +25,8 @@ public class UserProfileActivityViewModel extends ViewModel {
     UserReligion userReligion;
 
     UserProfession userProfession;
+
+    MutableLiveData<Uri> userProfileUri;
 
     public UserProfileActivityViewModel(){
         basicProfile = new BasicProfile();
@@ -41,6 +46,14 @@ public class UserProfileActivityViewModel extends ViewModel {
         return userProfession;
     }
 
+    public MutableLiveData<Uri> getUserProfileUri() {
+        if(userProfileUri == null){
+            userProfileUri = new MutableLiveData<>();
+        }
+        return userProfileUri;
+    }
+
+    @WorkerThread
     public void loadUserInfo(String userUID){
 
         db.collection("users").document(userUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -72,14 +85,14 @@ public class UserProfileActivityViewModel extends ViewModel {
                 getBasicProfile().getDateOfBirth().postValue(format.format(date)+" (Age "+diffYears+" )");
 
                 Log.d("D", "onSuccess: set date "+format.format(date));
-
-
                 //set Height
 
                 int heightFeet = (int)documentSnapshot.getDouble("personalDetails.height.feet").doubleValue();
+
                 int heightInch = (int)documentSnapshot.getDouble("personalDetails.height.inch").doubleValue();
 
                 getBasicProfile().getHeight().postValue(heightFeet + "' "+heightInch + "\" ");
+
                 Log.d("D", "onSuccess: loaded user height");
 
                 //set marital status
@@ -205,6 +218,26 @@ public class UserProfileActivityViewModel extends ViewModel {
 
             }
         });
+
+        //load profile picture
+        loadProfileUri(userUID);
+    }
+
+    public void loadProfileUri(String UUID){
+
+        FirebaseStorage.getInstance()
+                .getReference()
+                .child(UUID+"/images/profile.jpg")
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        getUserProfileUri().postValue(uri);
+                    }
+                });
+
+
+
     }
 
 

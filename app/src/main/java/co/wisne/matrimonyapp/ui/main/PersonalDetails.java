@@ -71,7 +71,7 @@ public class PersonalDetails{
     }
 
     public void speciallyEnabledChanged(boolean result){
-        Log.d(TAG, "speciallyEnabledChanged: "+result);
+
         getSpeciallyEnabled().setValue(result);
     }
 
@@ -80,28 +80,28 @@ public class PersonalDetails{
     public void setMarriageStatus(String value) {
         if(value==null)
             return;
-        Log.d(TAG, "setMarriageStatus: "+value);
+
         getMarriageStatus().setValue(value);
     }
 
     public void setHeightFeet(String value) {
         if(value==null)
             return;
-        Log.d(TAG, "setHeightFeet: "+value);
+
         getHeightFeet().setValue(Integer.parseInt(value));
     }
 
     public void setHeightInch(String value) {
         if(value==null)
             return;
-        Log.d(TAG, "setHeightInch: "+value);
+
         getHeightInch().setValue(Integer.parseInt(value));
     }
 
     public void setFamilyType(String value) {
         if(value==null)
             return;
-        Log.d(TAG, "setFamilyType: "+value);
+
         getFamilyType().setValue(value);
     }
 

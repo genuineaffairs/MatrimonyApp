@@ -71,9 +71,10 @@ public class ProfileFragment extends Fragment {
             return binding.getRoot();
     }
 
+
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
         UpdateSpinners();
 
@@ -86,20 +87,46 @@ public class ProfileFragment extends Fragment {
 
     class SetSpinnersTask extends AsyncTask<Void, Void, Void>{
 
+        String keyRelation;
+        String[] arrRelations;
+
+        String keyMarriageStatus;
+        String[] arrMaritalStatus;
+
+        String keyFamilyType;
+        String[] arrFamilyType;
+
+
         @Override
         protected Void doInBackground(Void... voids) {
 
+            keyRelation = viewModel.getRelation().getValue();
+            arrRelations = getResources().getStringArray(R.array.register_spinner_profile_for);
+
+            keyMarriageStatus = viewModel.getPersonalDetails().getMarriageStatus().getValue();
+            arrMaritalStatus =  getResources().getStringArray(R.array.marital_status);
+
+            keyFamilyType = viewModel.getPersonalDetails().getFamilyType().getValue();
+            arrFamilyType =  getResources().getStringArray(R.array.family_types);
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            if(getActivity()== null){
+                return;
+            }
+
             //relation
-            String keyRelation = viewModel.getRelation().getValue();
-            String[] arrRelations = getResources().getStringArray(R.array.register_spinner_profile_for);
             if(keyRelation!=null)
-            binding.spinnerRelation.setSelection(Arrays.asList(arrRelations).indexOf(keyRelation));
+                binding.spinnerRelation.setSelection(Arrays.asList(arrRelations).indexOf(keyRelation));
 
             //maritalStatus
-            String keyMarriageStatus = viewModel.getPersonalDetails().getMarriageStatus().getValue();
-            String[] arrMaritalStatus =  getResources().getStringArray(R.array.marital_status);
             if(keyMarriageStatus!=null)
-            binding.spinnerMaritalStatus.setSelection(Arrays.asList(arrMaritalStatus).indexOf(keyMarriageStatus));
+                binding.spinnerMaritalStatus.setSelection(Arrays.asList(arrMaritalStatus).indexOf(keyMarriageStatus));
 
             if( viewModel.getPersonalDetails().getHeightFeet().getValue()!=null){
 
@@ -119,10 +146,8 @@ public class ProfileFragment extends Fragment {
 
 
             //familyType
-            String keyFamilyType = viewModel.getPersonalDetails().getFamilyType().getValue();
-            String[] arrFamilyType =  getResources().getStringArray(R.array.family_types);
             if(keyFamilyType!=null)
-            binding.spinnerFamilyType.setSelection(Arrays.asList(arrFamilyType).indexOf(keyFamilyType));
+                binding.spinnerFamilyType.setSelection(Arrays.asList(arrFamilyType).indexOf(keyFamilyType));
 
             //specially enabled
             Boolean keySpeciallyEnabled = viewModel.personalDetails.getSpeciallyEnabled().getValue();
@@ -138,35 +163,27 @@ public class ProfileFragment extends Fragment {
             String keySubCaste = viewModel.getReligiousDetails().getSubCaste().getValue();
             String[] arrSubCaste =  getResources().getStringArray(R.array.sub_castes);
             if(keySubCaste!=null)
-            binding.spinnerSubCaste.setSelection(Arrays.asList(arrSubCaste).indexOf(keySubCaste));
+                binding.spinnerSubCaste.setSelection(Arrays.asList(arrSubCaste).indexOf(keySubCaste));
 
 
             //education
             String keyEducation = viewModel.getProfessionalDetails().getHighestEducation().getValue();
             String[] arrEducation =  getResources().getStringArray(R.array.highest_education_list);
             if(keyEducation!=null)
-            binding.spinnerHighestEducation.setSelection(Arrays.asList(arrEducation).indexOf(keyEducation));
+                binding.spinnerHighestEducation.setSelection(Arrays.asList(arrEducation).indexOf(keyEducation));
 
             //employement
             String keyEmployement = viewModel.getProfessionalDetails().getEmployementStatus().getValue();
             String[] arrEmployement =  getResources().getStringArray(R.array.employement_status_list);
             if(keyEmployement!=null)
-            binding.spinnerEmployeementStatus.setSelection(Arrays.asList(arrEmployement).indexOf(keyEmployement));
+                binding.spinnerEmployeementStatus.setSelection(Arrays.asList(arrEmployement).indexOf(keyEmployement));
 
             //employement
             String keySalary = viewModel.getProfessionalDetails().getIncome().getValue();
             String[] arrSalary =  getResources().getStringArray(R.array.income_list);
             if(keySalary!=null)
-            binding.spinnerIncome.setSelection(Arrays.asList(arrSalary).indexOf(keySalary));
+                binding.spinnerIncome.setSelection(Arrays.asList(arrSalary).indexOf(keySalary));
 
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-
-            super.onPostExecute(aVoid);
         }
     }
 

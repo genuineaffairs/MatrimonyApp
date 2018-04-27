@@ -2,11 +2,14 @@ package co.wisne.matrimonyapp.ui.register;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,6 +19,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.UUID;
 
 import co.wisne.matrimonyapp.models.BasicProfile;
@@ -31,7 +36,6 @@ public class RegisterViewModel extends ViewModel{
     private MutableLiveData<Boolean> progressBarVisibility;
 
 
-
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     StorageReference mainReference = firebaseStorage.getReference();
@@ -40,13 +44,12 @@ public class RegisterViewModel extends ViewModel{
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
     private MutableLiveData<String> relation;
     private MutableLiveData<String> firstName;
     private MutableLiveData<String> lastName;
     private MutableLiveData<String> dateOfBirth;
     private MutableLiveData<String> phoneNumber;
-
-
 
     private MutableLiveData<Uri> profilePictureURI;
     private MutableLiveData<Uri> IDProofURI;
@@ -63,6 +66,11 @@ public class RegisterViewModel extends ViewModel{
 
     private MutableLiveData<Boolean> RegistrationSuccess;
 
+
+    //bitmaps
+    Bitmap profilePictureBitmap;
+
+    Bitmap idProofBitmap;
 
 
 
@@ -207,6 +215,7 @@ public class RegisterViewModel extends ViewModel{
         return RegistrationSuccess;
     }
 
+
     //validation
     private boolean firstNameValid;
     private boolean lastNameValid;
@@ -309,8 +318,6 @@ public class RegisterViewModel extends ViewModel{
 //        }
 
 
-
-
         setStatusLoading();
 
         uploadProfilePicture();
@@ -320,52 +327,58 @@ public class RegisterViewModel extends ViewModel{
 
     public void uploadProfilePicture(){
 
-        if(getProfilePictureURI().getValue() != null){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            String profilePictureExtention = profilePictureURI.getValue().toString().substring(profilePictureURI.getValue().toString().lastIndexOf("."));
+        profilePictureBitmap.compress(Bitmap.CompressFormat.JPEG,40,byteArrayOutputStream);
 
-            profilePictureFileName = UUID.randomUUID()+profilePictureExtention;
+        byte[] data = byteArrayOutputStream.toByteArray();
 
-            StorageReference imagesRef = mainReference.child(user.getUid()+"/"+"images/"+profilePictureFileName);
+        StorageReference imagesRef = mainReference.child(user.getUid()+"/"+"images/profile.jpg");
 
-            UploadTask uploadTask = imagesRef.putFile(profilePictureURI.getValue());
+        UploadTask uploadTask = imagesRef.putBytes(data);
 
-            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    Log.d(TAG, "onComplete: profile picture uploaded "+task.getResult().getDownloadUrl());
-
-                    uploadIDproof();
-                }
-            });
-
-        }
-
-
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Log.d(TAG, "onSuccess: uploaded profile picture "+downloadUrl);
+                uploadIDproof();
+            }
+        });
     }
 
     public void uploadIDproof(){
 
-        if(getIDProofURI().getValue().toString() != null){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            String IDproofPictureFileExtention = IDProofURI.getValue().toString().substring(IDProofURI.getValue().toString().lastIndexOf("."));
+        idProofBitmap.compress(Bitmap.CompressFormat.JPEG,35,byteArrayOutputStream);
 
-            IDProofFileName = UUID.randomUUID()+IDproofPictureFileExtention;
+        byte[] data = byteArrayOutputStream.toByteArray();
 
-            StorageReference imagesRef = mainReference.child(user.getUid()+"/"+"images/"+IDProofFileName);
+        StorageReference imagesRef = mainReference.child(user.getUid()+"/"+"images/idProof.jpg");
 
-            UploadTask uploadTask = imagesRef.putFile(IDProofURI.getValue());
+        UploadTask uploadTask = imagesRef.putBytes(data);
 
-            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    Log.d(TAG, "onComplete: IDProof picture uploaded "+task.getResult().getDownloadUrl());
-
-                    insertIntoDatabase();
-                }
-            });
-
-        }
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Log.d(TAG, "onSuccess: uploaded idproof "+downloadUrl);
+                insertIntoDatabase();
+            }
+        });
 
     }
 
@@ -388,8 +401,8 @@ public class RegisterViewModel extends ViewModel{
         userProfile.setBirthDate(birthDate);
         userProfile.setPhoneNumber(phoneNumber);
         userProfile.setSex(sex);
-        userProfile.setProfilePictureName(profilePictureFileName);
-        userProfile.setIdProofPictureName(IDProofFileName);
+        userProfile.setProfilePictureName("profile.jpg");
+        userProfile.setIdProofPictureName("idProof.jpg");
 
         userDocumentRef.set(userProfile)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -402,6 +415,7 @@ public class RegisterViewModel extends ViewModel{
                 });
 
     }
+
 
 
 

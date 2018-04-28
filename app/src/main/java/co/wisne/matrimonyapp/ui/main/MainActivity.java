@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements ILogin{
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.mainFrame,new Welcome(),"Welcome")
+                .add(R.id.mainFrame,new WelcomeFragment(),"Welcome")
                 .commit();
 
     }

@@ -145,7 +145,7 @@ public class BasicProfile{
         private String familyStatus;
         private String familyType;
         private String maritalStatus;
-        private String numberOfPeople;
+        private Double numberOfPeople;
         private Boolean speciallyEnabled;
         private Map<String, Long> height;
 
@@ -174,11 +174,11 @@ public class BasicProfile{
             this.maritalStatus = maritalStatus;
         }
 
-        public String getNumberOfPeople() {
+        public Double getNumberOfPeople() {
             return numberOfPeople;
         }
 
-        public void setNumberOfPeople(String numberOfPeople) {
+        public void setNumberOfPeople(Double numberOfPeople) {
             this.numberOfPeople = numberOfPeople;
         }
 

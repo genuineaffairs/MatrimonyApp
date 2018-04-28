@@ -16,10 +16,10 @@ import co.wisne.matrimonyapp.interfaces.ILogin;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Welcome extends Fragment {
+public class WelcomeFragment extends Fragment {
 
 
-    public Welcome() {
+    public WelcomeFragment() {
         // Required empty public constructor
     }
 

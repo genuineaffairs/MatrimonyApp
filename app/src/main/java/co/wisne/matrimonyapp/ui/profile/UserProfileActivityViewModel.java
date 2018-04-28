@@ -3,11 +3,17 @@ package co.wisne.matrimonyapp.ui.profile;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -15,10 +21,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserProfileActivityViewModel extends ViewModel {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    FirebaseUser meUser = FirebaseAuth.getInstance().getCurrentUser();
 
     BasicProfile basicProfile;
 
@@ -27,6 +37,10 @@ public class UserProfileActivityViewModel extends ViewModel {
     UserProfession userProfession;
 
     MutableLiveData<Uri> userProfileUri;
+
+    String currentUserUID;
+
+    MutableLiveData<String> toastEvent;
 
     public UserProfileActivityViewModel(){
         basicProfile = new BasicProfile();
@@ -53,8 +67,17 @@ public class UserProfileActivityViewModel extends ViewModel {
         return userProfileUri;
     }
 
+    public MutableLiveData<String> getToastEvent() {
+        if(toastEvent == null){
+            toastEvent = new MutableLiveData<>();
+        }
+        return toastEvent;
+    }
+
     @WorkerThread
     public void loadUserInfo(String userUID){
+
+        currentUserUID = userUID;
 
         db.collection("users").document(userUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -235,6 +258,60 @@ public class UserProfileActivityViewModel extends ViewModel {
                         getUserProfileUri().postValue(uri);
                     }
                 });
+    }
+
+    public void bookmarkThisUser(){
+
+
+
+        //check if user is already bookmarked
+        db.collection("users").document(meUser.getUid())
+                .collection("bookmarks")
+                .document(currentUserUID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        //if successfully checked on server
+                        if(task.isSuccessful()){
+
+                            //document already exists, then user is bookmarked already.
+                            if(task.getResult().exists()){
+
+                                getToastEvent().postValue("User is already in your bookmarks.");
+
+                            }else {
+                                //else add user to bookmarks
+                                Map<String,Object> bookmarkData = new HashMap<>();
+
+                                bookmarkData.put("UID",currentUserUID);
+                                bookmarkData.put("time",new Date());
+
+
+
+                                db.collection("users").
+                                        document(meUser.getUid()).
+                                        collection("bookmarks").
+                                        document(currentUserUID).
+                                        set(bookmarkData).
+                                        addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                //notify user on successfully bookmarking
+                                                getToastEvent().postValue("User has been bookmarked successfully.");
+                                            }
+                                        });
+
+                            }
+                        }else {
+
+                            getToastEvent().postValue("Failed to connect to server");
+                        }
+                    }
+                });
+
+
     }
 
 

@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="SimpleWhite">#f1f1f1</color>
     <color name="GreyBABA">#bababa</color>
+    <color name="touchDown">#e3ece8</color>
 </resources>

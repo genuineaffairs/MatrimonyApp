@@ -1,4 +1,4 @@
-package co.wisne.matrimonyapp.ui.main;
+package co.wisne.matrimonyapp.ui.main.model;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;

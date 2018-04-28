@@ -1,10 +1,14 @@
-package co.wisne.matrimonyapp.ui.main;
+package co.wisne.matrimonyapp.ui.main.adapter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import co.wisne.matrimonyapp.ui.main.BookmarksFragment;
+import co.wisne.matrimonyapp.ui.main.NotificationsFragment;
+import co.wisne.matrimonyapp.ui.main.ProfileFragment;
 
 public class ProfilePagerAdapter extends FragmentPagerAdapter {
 

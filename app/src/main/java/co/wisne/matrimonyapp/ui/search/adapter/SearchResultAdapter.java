@@ -28,7 +28,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     private ArrayList<SearchResult> results = new ArrayList<>();
 
-    ViewGroup viewGroup;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -81,11 +81,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        viewGroup = parent;
-
         RecyclerSearchResultItemBinding binding = RecyclerSearchResultItemBinding.inflate(inflater,parent,false);
 
         ViewHolder vh = new ViewHolder(binding);
+
         return vh;
     }
 
@@ -107,7 +106,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                 ).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Glide.with(viewGroup.getContext())
+                        Glide.with(holder.itemView.getContext().getApplicationContext())
                                 .load(uri)
                                 .into(holder.profilePicture);
                     }

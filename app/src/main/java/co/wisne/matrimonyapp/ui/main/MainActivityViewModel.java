@@ -3,6 +3,7 @@ package co.wisne.matrimonyapp.ui.main;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -10,14 +11,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import co.wisne.matrimonyapp.models.BasicProfile;
-
-import static android.content.ContentValues.TAG;
+import co.wisne.matrimonyapp.ui.main.model.Bookmarks;
+import co.wisne.matrimonyapp.ui.main.model.PersonalDetails;
+import co.wisne.matrimonyapp.ui.main.model.ProfessionalDetails;
+import co.wisne.matrimonyapp.ui.main.model.ReligiousDetails;
 
 public class MainActivityViewModel extends ViewModel {
 
@@ -49,6 +55,11 @@ public class MainActivityViewModel extends ViewModel {
     MutableLiveData<Boolean> profileCompleted;
 
     StorageReference profilePictureRef;
+
+
+    //bookmarks
+    ArrayList<Bookmarks> userBookmarks;
+    MutableLiveData<Boolean> updateBookmarks;
 
     public  MainActivityViewModel(){
 
@@ -159,6 +170,24 @@ public class MainActivityViewModel extends ViewModel {
         this.relation.setValue(relation);
     }
 
+    public ArrayList<Bookmarks> getUserBookmarks() {
+        if(userBookmarks == null){
+            userBookmarks = new ArrayList<>();
+        }
+        return userBookmarks;
+    }
+
+    public void setUserBookmarks(ArrayList<Bookmarks> userBookmarks) {
+        this.userBookmarks = userBookmarks;
+    }
+
+    public MutableLiveData<Boolean> getUpdateBookmarks() {
+        if(updateBookmarks == null){
+            updateBookmarks = new MutableLiveData<>();
+        }
+        return updateBookmarks;
+    }
+
     public void loadUserData(){
 
         db.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -223,10 +252,9 @@ public class MainActivityViewModel extends ViewModel {
                         if(personalDetails.getFamilyStatus()!=null){
                             getPersonalDetails().getFamilyStatus().setValue(personalDetails.getFamilyStatus());
                         }
+                            if(personalDetails.getNumberOfPeople()!=null)
+                            getPersonalDetails().getNumberOfFamilyMembers().setValue(String.valueOf(personalDetails.getNumberOfPeople().intValue()));
 
-                        if(personalDetails.getNumberOfPeople()!=null){
-                            getPersonalDetails().getNumberOfFamilyMembers().setValue(personalDetails.getNumberOfPeople());
-                        }
                     }
 
                 }
@@ -285,7 +313,7 @@ public class MainActivityViewModel extends ViewModel {
                 "personalDetails.height.inch",getPersonalDetails().getHeightInch().getValue(),
                 "personalDetails.familyStatus",getPersonalDetails().getFamilyStatus().getValue(),
                 "personalDetails.familyType",getPersonalDetails().getFamilyType().getValue(),
-                "personalDetails.numberOfPeople",getPersonalDetails().getNumberOfFamilyMembers().getValue(),
+                "personalDetails.numberOfPeople",Double.parseDouble(getPersonalDetails().getNumberOfFamilyMembers().getValue()),
                 "personalDetails.speciallyEnabled",getPersonalDetails().getSpeciallyEnabled().getValue(),
 
                 "religiousDetails.religion", getReligiousDetails().getReligion().getValue(),
@@ -309,6 +337,36 @@ public class MainActivityViewModel extends ViewModel {
                 getSnackBarEvent().postValue("Profile changes saved.");
             }
         });
+    }
+
+    @WorkerThread
+    public void loadBookmarks(){
+
+        getUserBookmarks().clear();
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("bookmarks")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for(DocumentSnapshot d: queryDocumentSnapshots){
+
+                            getUserBookmarks().add(
+                                    new Bookmarks(
+                                            d.getId()
+                                            )
+                            );
+
+                        }
+
+                        //notify collection changed
+                        getUpdateBookmarks().postValue(true);
+                    }
+                });
+
     }
 
 

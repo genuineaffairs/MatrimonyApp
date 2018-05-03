@@ -55,7 +55,6 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
-
     //firebase auth ui
     implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
     // FirebaseUI Storage only
@@ -64,7 +63,6 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-
 
 
 }

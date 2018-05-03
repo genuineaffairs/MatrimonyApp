@@ -2,6 +2,7 @@ package co.wisne.matrimonyapp.ui.profile;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,8 +15,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.UUID;
+
 import co.wisne.matrimonyapp.R;
 import co.wisne.matrimonyapp.databinding.ActivityUserProfileBinding;
+import co.wisne.matrimonyapp.ui.chat.ChatActivity;
 import co.wisne.matrimonyapp.ui.profile.adapter.UserProfileTabAdapter;
 import co.wisne.matrimonyapp.ui.profile.dialogs.BookmarkPromptDialogFragment;
 
@@ -24,6 +28,8 @@ public class UserProfileActivity extends AppCompatActivity implements BookmarkPr
     ActivityUserProfileBinding binding;
 
     UserProfileActivityViewModel viewModel;
+
+    String userUID;
 
 
     @Override
@@ -43,7 +49,7 @@ public class UserProfileActivity extends AppCompatActivity implements BookmarkPr
 
         setSupportActionBar(toolbar);
 
-        String userUID = getIntent().getExtras().getString("profileUUID");
+        userUID = getIntent().getExtras().getString("profileUUID");
 
         getSupportActionBar().setTitle(null);
 
@@ -74,6 +80,12 @@ public class UserProfileActivity extends AppCompatActivity implements BookmarkPr
         binding.buttonBookmark.setOnClickListener((view)->{
             BookmarkPromptDialogFragment bookmarkPromptDialogFragment = new BookmarkPromptDialogFragment();
             bookmarkPromptDialogFragment.show(getSupportFragmentManager(),"bookmark");
+        });
+
+        binding.buttonChat.setOnClickListener((view)->{
+            Intent chatIntent = new Intent(this, ChatActivity.class);
+            chatIntent.putExtra("profileUUID", userUID);
+            startActivity(chatIntent);
         });
 
     }

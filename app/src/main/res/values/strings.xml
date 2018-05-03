@@ -21,15 +21,12 @@
     <string name="radio_false">No</string>
 
 
-
     <string name="complete_your_profile_message">
         You haven\'t completed your profile. Please fill in the details, in order to make your profile public.
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 
 
     <!-- dialog !-->

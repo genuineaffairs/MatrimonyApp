@@ -190,6 +190,8 @@ public class MainActivityViewModel extends ViewModel {
 
     public void loadUserData(){
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         db.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

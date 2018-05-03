@@ -44,27 +44,24 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.search.SearchActivity"
-            android:parentActivityName="co.wisne.matrimonyapp.ui.main.MainActivity">
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="co.wisne.matrimonyapp.ui.main.MainActivity" />
 
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
         </activity>
-
-
-        <activity android:name=".ui.profile.UserProfileActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
-
+        <activity
+            android:name=".ui.profile.UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".ui.chat.ChatActivity"></activity>
     </application>
 
 </manifest>
